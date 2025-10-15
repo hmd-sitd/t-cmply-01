@@ -3,7 +3,7 @@
 
 import React, { useRef, useState, useCallback } from 'react';
 import type { ChatSettings } from '../types';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface Project {
   id: string;
@@ -33,6 +33,7 @@ export default function ChatInput({
   selectedProject,
   onOpenSources
 }: ChatInputProps) {
+  const { theme } = useTheme();
   const [message, setMessage] = useState("");
   const [isSending, setIsSending] = useState(false);
   const messageInputRef = useRef<HTMLTextAreaElement>(null);
@@ -164,8 +165,8 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
       style={{
         position: "sticky",
         bottom: 0,
-        backgroundColor: currentTheme.colors.surface,
-        borderTop: `1px solid ${currentTheme.colors.grayLight}`,
+        backgroundColor: theme.colors.surface,
+        borderTop: `1px solid ${theme.colors.grayLight}`,
         padding: "20px 40px",
         zIndex: 100,
       }}
@@ -179,8 +180,8 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
       >
         <div
           style={{
-            backgroundColor: currentTheme.colors.surface,
-            border: `2px solid ${currentTheme.colors.inputBorder}`,
+            backgroundColor: theme.colors.surface,
+            border: `2px solid ${theme.colors.inputBorder}`,
             borderRadius: "16px",
             padding: "16px",
             boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
@@ -188,11 +189,11 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
           }}
           onFocus={() => {
             const container = document.querySelector("[data-chat-input-container]") as HTMLElement;
-            if (container) container.style.borderColor = currentTheme.colors.inputBorderFocus;
+            if (container) container.style.borderColor = theme.colors.inputBorderFocus;
           }}
           onBlur={() => {
             const container = document.querySelector("[data-chat-input-container]") as HTMLElement;
-            if (container) container.style.borderColor = currentTheme.colors.inputBorder;
+            if (container) container.style.borderColor = theme.colors.inputBorder;
           }}
           data-chat-input-container
         >
@@ -203,17 +204,17 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
               alignItems: 'center',
               justifyContent: 'space-between',
               padding: '8px 12px',
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: '8px',
               marginBottom: '12px',
               fontSize: '13px',
-              border: `1px solid ${currentTheme.colors.primary}`,
+              border: `1px solid ${theme.colors.primary}`,
             }}>
               <div style={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: '8px',
-                color: currentTheme.colors.primary
+                color: theme.colors.primary
               }}>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
@@ -227,7 +228,7 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
                   style={{
                     backgroundColor: 'transparent',
                     border: 'none',
-                    color: currentTheme.colors.primary,
+                    color: theme.colors.primary,
                     cursor: 'pointer',
                     fontSize: '11px',
                     textDecoration: 'underline',
@@ -258,7 +259,7 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
               resize: "none",
               outline: "none",
               fontFamily: "inherit",
-              color: isInputEnabled ? currentTheme.colors.textDark : currentTheme.colors.textMedium,
+              color: isInputEnabled ? theme.colors.textDark : theme.colors.textMedium,
               backgroundColor: "transparent",
               overflow: "hidden",
               opacity: isInputEnabled ? 1 : 0.5,
@@ -282,17 +283,17 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
                   style={{
                     padding: "8px 16px",
                     border: selectedProject 
-                      ? `1px solid ${currentTheme.colors.primary}` 
-                      : `2px solid ${currentTheme.colors.primary}`,
+                      ? `1px solid ${theme.colors.primary}` 
+                      : `2px solid ${theme.colors.primary}`,
                     borderRadius: "8px",
                     backgroundColor: selectedProject 
-                      ? currentTheme.colors.primary 
+                      ? theme.colors.primary 
                       : 'white',
                     fontSize: "13px",
                     fontWeight: "600",
                     color: selectedProject 
                       ? "white" 
-                      : currentTheme.colors.primary,
+                      : theme.colors.primary,
                     display: "flex",
                     alignItems: "center",
                     gap: "8px",
@@ -316,7 +317,7 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
                 <div
                   style={{
                     fontSize: "12px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     display: "flex",
                     alignItems: "center",
                     gap: "6px",
@@ -326,8 +327,8 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
                     style={{
                       width: "12px",
                       height: "12px",
-                      border: `2px solid ${currentTheme.colors.grayLight}`,
-                      borderTop: `2px solid ${currentTheme.colors.primary}`,
+                      border: `2px solid ${theme.colors.grayLight}`,
+                      borderTop: `2px solid ${theme.colors.primary}`,
                       borderRadius: "50%",
                       animation: "spin 1s linear infinite",
                     }}
@@ -343,7 +344,7 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
               style={{
                 width: "40px",
                 height: "40px",
-                backgroundColor: canSendMessage ? currentTheme.colors.buttonPrimary : currentTheme.colors.textLight,
+                backgroundColor: canSendMessage ? theme.colors.buttonPrimary : theme.colors.textLight,
                 border: "none",
                 borderRadius: "10px",
                 cursor: canSendMessage ? "pointer" : "not-allowed",
@@ -355,13 +356,13 @@ const handleInputChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>
               }}
               onMouseEnter={(e) => {
                 if (canSendMessage) {
-                  e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+                  e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover;
                   e.currentTarget.style.transform = "scale(1.05)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (canSendMessage) {
-                  e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimary;
+                  e.currentTarget.style.backgroundColor = theme.colors.buttonPrimary;
                   e.currentTarget.style.transform = "scale(1)";
                 }
               }}

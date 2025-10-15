@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 
 interface ChatHistoryTabProps {
@@ -31,6 +31,7 @@ interface ChatMessage {
 }
 
 export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
+  const { theme } = useTheme();
   const [threads, setThreads] = useState<ChatThread[]>([]);
   const [selectedThread, setSelectedThread] = useState<ChatThread | null>(null);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -117,19 +118,19 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
       {/* Threads List */}
       <div style={{
         width: "400px",
-        backgroundColor: currentTheme.colors.surface,
+        backgroundColor: theme.colors.surface,
         borderRadius: "8px",
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
         display: "flex",
         flexDirection: "column",
       }}>
         {/* Header */}
-        <div style={{ padding: "20px", borderBottom: `1px solid ${currentTheme.colors.grayLight}` }}>
+        <div style={{ padding: "20px", borderBottom: `1px solid ${theme.colors.grayLight}` }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
             <h3 style={{
               fontSize: "18px",
               fontWeight: "600",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               margin: "0",
             }}>
               Chat Threads ({totalThreads})
@@ -139,7 +140,7 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
               disabled={isLoading}
               style={{
                 padding: "6px 12px",
-                backgroundColor: currentTheme.colors.buttonPrimary,
+                backgroundColor: theme.colors.buttonPrimary,
                 color: "white",
                 border: "none",
                 borderRadius: "6px",
@@ -164,12 +165,12 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
               style={{
                 width: "100%",
                 padding: "8px 32px 8px 12px",
-                border: `1px solid ${currentTheme.colors.inputBorder}`,
+                border: `1px solid ${theme.colors.inputBorder}`,
                 borderRadius: "6px",
                 fontSize: "14px",
                 outline: "none",
-                backgroundColor: currentTheme.colors.inputBackground,
-                color: currentTheme.colors.textDark,
+                backgroundColor: theme.colors.inputBackground,
+                color: theme.colors.textDark,
               }}
             />
             <SearchIcon />
@@ -188,8 +189,8 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
               <div style={{
                 width: "24px",
                 height: "24px",
-                border: `3px solid ${currentTheme.colors.grayLight}`,
-                borderTop: `3px solid ${currentTheme.colors.primary}`,
+                border: `3px solid ${theme.colors.grayLight}`,
+                borderTop: `3px solid ${theme.colors.primary}`,
                 borderRadius: "50%",
                 animation: "spin 1s linear infinite",
               }} />
@@ -198,12 +199,12 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
             <div style={{
               textAlign: "center",
               padding: "40px 20px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}>
               <div style={{
                 width: "48px",
                 height: "48px",
-                backgroundColor: currentTheme.colors.backgroundAlt,
+                backgroundColor: theme.colors.backgroundAlt,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -236,9 +237,9 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
       {/* Messages View */}
       <div style={{
         flex: 1,
-        backgroundColor: currentTheme.colors.surface,
+        backgroundColor: theme.colors.surface,
         borderRadius: "8px",
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
         display: "flex",
         flexDirection: "column",
       }}>
@@ -247,12 +248,12 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
             {/* Thread Header */}
             <div style={{
               padding: "20px",
-              borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+              borderBottom: `1px solid ${theme.colors.grayLight}`,
             }}>
               <h3 style={{
                 fontSize: "18px",
                 fontWeight: "600",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 margin: "0 0 8px 0",
               }}>
                 {selectedThread.title}
@@ -261,7 +262,7 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
                 display: "flex",
                 gap: "16px",
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}>
                 <span>{selectedThread.message_count} messages</span>
                 <span>User ID: {selectedThread.user_id}</span>
@@ -281,8 +282,8 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
                   <div style={{
                     width: "24px",
                     height: "24px",
-                    border: `3px solid ${currentTheme.colors.grayLight}`,
-                    borderTop: `3px solid ${currentTheme.colors.primary}`,
+                    border: `3px solid ${theme.colors.grayLight}`,
+                    borderTop: `3px solid ${theme.colors.primary}`,
                     borderRadius: "50%",
                     animation: "spin 1s linear infinite",
                   }} />
@@ -291,7 +292,7 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
                 <div style={{
                   textAlign: "center",
                   padding: "40px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                 }}>
                   No messages in this thread
                 </div>
@@ -311,13 +312,13 @@ export default function ChatHistoryTab({ onError }: ChatHistoryTabProps) {
             justifyContent: "center",
             height: "100%",
             textAlign: "center",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
           }}>
             <div>
               <div style={{
                 width: "64px",
                 height: "64px",
-                backgroundColor: currentTheme.colors.backgroundAlt,
+                backgroundColor: theme.colors.backgroundAlt,
                 borderRadius: "50%",
                 display: "flex",
                 alignItems: "center",
@@ -355,21 +356,23 @@ interface ThreadItemProps {
 }
 
 function ThreadItem({ thread, isSelected, onSelect, onDelete }: ThreadItemProps) {
+  const { theme } = useTheme();
+  
   return (
     <div
       onClick={onSelect}
       style={{
         padding: "12px",
         borderRadius: "8px",
-        backgroundColor: isSelected ? `${currentTheme.colors.primary}20` : "transparent",
-        border: isSelected ? `1px solid ${currentTheme.colors.primary}` : "1px solid transparent",
+        backgroundColor: isSelected ? `${theme.colors.primary}20` : "transparent",
+        border: isSelected ? `1px solid ${theme.colors.primary}` : "1px solid transparent",
         cursor: "pointer",
         transition: "all 0.2s",
         marginBottom: "4px",
       }}
       onMouseEnter={(e) => {
         if (!isSelected) {
-          e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
+          e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
         }
       }}
       onMouseLeave={(e) => {
@@ -388,7 +391,7 @@ function ThreadItem({ thread, isSelected, onSelect, onDelete }: ThreadItemProps)
           <div style={{
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "4px",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -398,14 +401,14 @@ function ThreadItem({ thread, isSelected, onSelect, onDelete }: ThreadItemProps)
           </div>
           <div style={{
             fontSize: "12px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             marginBottom: "4px",
           }}>
             {thread.message_count} messages • {thread.total_tokens || 0} tokens • User {thread.user_id}
           </div>
           <div style={{
             fontSize: "11px",
-            color: currentTheme.colors.textLight,
+            color: theme.colors.textLight,
           }}>
             {thread.last_message_at 
               ? `Last: ${new Date(thread.last_message_at).toLocaleDateString()}`
@@ -422,7 +425,7 @@ function ThreadItem({ thread, isSelected, onSelect, onDelete }: ThreadItemProps)
           style={{
             backgroundColor: "transparent",
             border: "none",
-            color: currentTheme.colors.error,
+            color: theme.colors.error,
             cursor: "pointer",
             padding: "4px",
             borderRadius: "4px",
@@ -430,7 +433,7 @@ function ThreadItem({ thread, isSelected, onSelect, onDelete }: ThreadItemProps)
             flexShrink: 0,
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = `${currentTheme.colors.error}20`;
+            e.currentTarget.style.backgroundColor = `${theme.colors.error}20`;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = "transparent";
@@ -449,6 +452,7 @@ interface MessageItemProps {
 }
 
 function MessageItem({ message }: MessageItemProps) {
+  const { theme } = useTheme();
   const isUser = message.role === 'user';
   
   return (
@@ -462,9 +466,9 @@ function MessageItem({ message }: MessageItemProps) {
         maxWidth: "80%",
         padding: "12px 16px",
         borderRadius: "16px",
-        backgroundColor: isUser ? currentTheme.colors.primary : currentTheme.colors.backgroundAlt,
-        color: isUser ? "white" : currentTheme.colors.textDark,
-        border: isUser ? "none" : `1px solid ${currentTheme.colors.grayLight}`,
+        backgroundColor: isUser ? theme.colors.primary : theme.colors.backgroundAlt,
+        color: isUser ? "white" : theme.colors.textDark,
+        border: isUser ? "none" : `1px solid ${theme.colors.grayLight}`,
       }}>
         <div style={{
           fontSize: "12px",
@@ -498,7 +502,7 @@ function MessageItem({ message }: MessageItemProps) {
       </div>
       <div style={{
         fontSize: "11px",
-        color: currentTheme.colors.textLight,
+        color: theme.colors.textLight,
         marginTop: "4px",
       }}>
         {new Date(message.timestamp).toLocaleString()}
@@ -508,23 +512,26 @@ function MessageItem({ message }: MessageItemProps) {
 }
 
 // Icons
-const SearchIcon = () => (
-  <svg style={{
-    position: "absolute",
-    right: "8px",
-    top: "50%",
-    transform: "translateY(-50%)",
-    width: "16px",
-    height: "16px",
-    color: currentTheme.colors.textMedium,
-  }}
-  fill="none"
-  stroke="currentColor"
-  viewBox="0 0 24 24">
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.35-4.35" />
-  </svg>
-);
+function SearchIcon() {
+  const { theme } = useTheme();
+  return (
+    <svg style={{
+      position: "absolute",
+      right: "8px",
+      top: "50%",
+      transform: "translateY(-50%)",
+      width: "16px",
+      height: "16px",
+      color: theme.colors.textMedium,
+    }}
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
 
 const MessageIcon = ({ size = 24 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 import type { Role, Permission } from '../../types';
 
@@ -29,6 +29,7 @@ const TrashIcon = () => (
 );
 
 export default function RolesTab({ onError }: RolesTabProps) {
+  const { theme } = useTheme();
   const [roles, setRoles] = useState<Role[]>([]);
   const [permissions, setPermissions] = useState<Permission[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -124,21 +125,21 @@ export default function RolesTab({ onError }: RolesTabProps) {
       <div style={{
         textAlign: "center",
         padding: "60px 20px",
-        backgroundColor: currentTheme.colors.surface,
+        backgroundColor: theme.colors.surface,
         borderRadius: "8px",
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
       }}>
         <div style={{
           fontSize: "18px",
           fontWeight: "500",
-          color: currentTheme.colors.error,
+          color: theme.colors.error,
           marginBottom: "8px",
         }}>
           Access Denied
         </div>
         <div style={{
           fontSize: "14px",
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
         }}>
           Only Super Administrators can manage roles and permissions
         </div>
@@ -158,15 +159,15 @@ export default function RolesTab({ onError }: RolesTabProps) {
         alignItems: "center",
         justifyContent: "center",
         padding: "60px",
-        backgroundColor: currentTheme.colors.surface,
+        backgroundColor: theme.colors.surface,
         borderRadius: "8px",
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
       }}>
         <div style={{
           width: "40px",
           height: "40px",
-          border: `4px solid ${currentTheme.colors.grayLight}`,
-          borderTop: `4px solid ${currentTheme.colors.primary}`,
+          border: `4px solid ${theme.colors.grayLight}`,
+          borderTop: `4px solid ${theme.colors.primary}`,
           borderRadius: "50%",
           animation: "spin 1s linear infinite",
         }} />
@@ -193,14 +194,14 @@ export default function RolesTab({ onError }: RolesTabProps) {
           <h2 style={{
             fontSize: "28px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: "0 0 8px 0",
           }}>
             Roles & Permissions
           </h2>
           <p style={{
             fontSize: "16px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             margin: 0,
           }}>
             Create and manage system roles with specific permissions
@@ -211,7 +212,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
           onClick={() => setIsCreateModalOpen(true)}
           style={{
             padding: "12px 20px",
-            backgroundColor: currentTheme.colors.primary,
+            backgroundColor: theme.colors.primary,
             color: "white",
             border: "none",
             borderRadius: "8px",
@@ -224,11 +225,11 @@ export default function RolesTab({ onError }: RolesTabProps) {
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = currentTheme.colors.primaryDark;
+            e.currentTarget.style.backgroundColor = theme.colors.primaryDark;
             e.currentTarget.style.transform = "translateY(-1px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = currentTheme.colors.primary;
+            e.currentTarget.style.backgroundColor = theme.colors.primary;
             e.currentTarget.style.transform = "translateY(0)";
           }}
         >
@@ -254,12 +255,12 @@ export default function RolesTab({ onError }: RolesTabProps) {
             style={{
               width: "100%",
               padding: "12px 40px 12px 16px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
-              backgroundColor: currentTheme.colors.inputBackground,
-              color: currentTheme.colors.textDark,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.textDark,
             }}
           />
           <svg
@@ -270,7 +271,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
               transform: "translateY(-50%)",
               width: "16px",
               height: "16px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}
             fill="none"
             stroke="currentColor"
@@ -285,7 +286,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
           display: "flex",
           gap: "24px",
           fontSize: "14px",
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
         }}>
           <span>{roles.length} total roles</span>
           <span>{roles.filter(r => r.is_active).length} active</span>
@@ -302,19 +303,19 @@ export default function RolesTab({ onError }: RolesTabProps) {
           <div
             key={role.id}
             style={{
-              backgroundColor: currentTheme.colors.surface,
-              border: `1px solid ${currentTheme.colors.grayLight}`,
+              backgroundColor: theme.colors.surface,
+              border: `1px solid ${theme.colors.grayLight}`,
               borderRadius: "12px",
               padding: "24px",
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
-              e.currentTarget.style.borderColor = currentTheme.colors.inputBorderFocus;
+              e.currentTarget.style.borderColor = theme.colors.inputBorderFocus;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.boxShadow = "none";
-              e.currentTarget.style.borderColor = currentTheme.colors.grayLight;
+              e.currentTarget.style.borderColor = theme.colors.grayLight;
             }}
           >
             {/* Role Header */}
@@ -334,7 +335,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
                   <h3 style={{
                     fontSize: "20px",
                     fontWeight: "600",
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                     margin: 0,
                   }}>
                     {role.name}
@@ -343,12 +344,12 @@ export default function RolesTab({ onError }: RolesTabProps) {
                     width: "8px",
                     height: "8px",
                     borderRadius: "50%",
-                    backgroundColor: role.is_active ? currentTheme.colors.success : currentTheme.colors.error,
+                    backgroundColor: role.is_active ? theme.colors.success : theme.colors.error,
                   }} />
                 </div>
                 <p style={{
                   fontSize: "14px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   margin: "0 0 12px 0",
                   lineHeight: "1.4",
                 }}>
@@ -365,19 +366,19 @@ export default function RolesTab({ onError }: RolesTabProps) {
                     border: "none",
                     borderRadius: "4px",
                     cursor: "pointer",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "all 0.2s",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
-                    e.currentTarget.style.color = currentTheme.colors.textDark;
+                    e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
+                    e.currentTarget.style.color = theme.colors.textDark;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = "transparent";
-                    e.currentTarget.style.color = currentTheme.colors.textMedium;
+                    e.currentTarget.style.color = theme.colors.textMedium;
                   }}
                 >
                   <EditIcon />
@@ -391,14 +392,14 @@ export default function RolesTab({ onError }: RolesTabProps) {
                     border: "none",
                     borderRadius: "4px",
                     cursor: "pointer",
-                    color: currentTheme.colors.error,
+                    color: theme.colors.error,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     transition: "all 0.2s",
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = `${currentTheme.colors.error}20`;
+                    e.currentTarget.style.backgroundColor = `${theme.colors.error}20`;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = "transparent";
@@ -415,21 +416,21 @@ export default function RolesTab({ onError }: RolesTabProps) {
               gridTemplateColumns: "1fr 1fr 1fr",
               gap: "16px",
               padding: "16px",
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: "8px",
             }}>
               <div style={{ textAlign: "center" }}>
                 <div style={{
                   fontSize: "24px",
                   fontWeight: "bold",
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                   marginBottom: "4px",
                 }}>
                   {role.user_count}
                 </div>
                 <div style={{
                   fontSize: "12px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   fontWeight: "500",
                 }}>
                   Users
@@ -439,14 +440,14 @@ export default function RolesTab({ onError }: RolesTabProps) {
                 <div style={{
                   fontSize: "24px",
                   fontWeight: "bold",
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                   marginBottom: "4px",
                 }}>
                   {role.permission_count}
                 </div>
                 <div style={{
                   fontSize: "12px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   fontWeight: "500",
                 }}>
                   Permissions
@@ -456,7 +457,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
                 <div style={{
                   fontSize: "12px",
                   fontWeight: "500",
-                  color: role.is_active ? currentTheme.colors.success : currentTheme.colors.error,
+                  color: role.is_active ? theme.colors.success : theme.colors.error,
                   marginBottom: "4px",
                   textTransform: "uppercase",
                   letterSpacing: "0.5px",
@@ -465,7 +466,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
                 </div>
                 <div style={{
                   fontSize: "12px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                 }}>
                   Status
                 </div>
@@ -476,9 +477,9 @@ export default function RolesTab({ onError }: RolesTabProps) {
             <div style={{
               marginTop: "16px",
               padding: "12px 0 0 0",
-              borderTop: `1px solid ${currentTheme.colors.backgroundAlt}`,
+              borderTop: `1px solid ${theme.colors.backgroundAlt}`,
               fontSize: "12px",
-              color: currentTheme.colors.textLight,
+              color: theme.colors.textLight,
               textAlign: "center",
             }}>
               Created {new Date(role.created_at).toLocaleDateString('en-US', {
@@ -495,21 +496,21 @@ export default function RolesTab({ onError }: RolesTabProps) {
         <div style={{
           textAlign: "center",
           padding: "60px 20px",
-          backgroundColor: currentTheme.colors.surface,
+          backgroundColor: theme.colors.surface,
           borderRadius: "8px",
-          border: `1px solid ${currentTheme.colors.grayLight}`,
+          border: `1px solid ${theme.colors.grayLight}`,
         }}>
           <div style={{
             fontSize: "18px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "8px",
           }}>
             {searchTerm ? `No roles found matching "${searchTerm}"` : 'No roles created yet'}
           </div>
           <div style={{
             fontSize: "14px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             marginBottom: "24px",
           }}>
             {searchTerm ? 'Try adjusting your search terms' : 'Create your first role to get started'}
@@ -519,7 +520,7 @@ export default function RolesTab({ onError }: RolesTabProps) {
               onClick={() => setIsCreateModalOpen(true)}
               style={{
                 padding: "12px 24px",
-                backgroundColor: currentTheme.colors.primary,
+                backgroundColor: theme.colors.primary,
                 color: "white",
                 border: "none",
                 borderRadius: "8px",
@@ -559,6 +560,7 @@ interface CreateRoleModalProps {
 }
 
 function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleModalProps) {
+  const { theme } = useTheme();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [selectedPermissions, setSelectedPermissions] = useState<number[]>([]);
@@ -623,7 +625,7 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
       <form
         onSubmit={handleSubmit}
         style={{
-          backgroundColor: currentTheme.colors.surface,
+          backgroundColor: theme.colors.surface,
           borderRadius: "12px",
           padding: "32px",
           width: "100%",
@@ -637,7 +639,7 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
         <h2 style={{
           fontSize: "24px",
           fontWeight: "600",
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           margin: "0 0 24px 0",
         }}>
           Create New Role
@@ -648,7 +650,7 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             display: "block",
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "8px",
           }}>
             Role Name *
@@ -662,12 +664,12 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             style={{
               width: "100%",
               padding: "12px 16px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "16px",
               outline: "none",
-              backgroundColor: currentTheme.colors.inputBackground,
-              color: currentTheme.colors.textDark,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.textDark,
             }}
           />
         </div>
@@ -677,7 +679,7 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             display: "block",
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "8px",
           }}>
             Description
@@ -690,12 +692,12 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             style={{
               width: "100%",
               padding: "12px 16px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "16px",
               outline: "none",
-              backgroundColor: currentTheme.colors.inputBackground,
-              color: currentTheme.colors.textDark,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.textDark,
             }}
           />
         </div>
@@ -706,14 +708,14 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             display: "block",
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "16px",
           }}>
             Permissions ({selectedPermissions.length} selected)
           </label>
 
           <div style={{
-            border: `1px solid ${currentTheme.colors.inputBorder}`,
+            border: `1px solid ${theme.colors.inputBorder}`,
             borderRadius: "8px",
             maxHeight: "300px",
             overflow: "auto",
@@ -723,11 +725,11 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
                 {/* Scope Header */}
                 <div style={{
                   padding: "12px 16px",
-                  backgroundColor: currentTheme.colors.backgroundAlt,
-                  borderBottom: `1px solid ${currentTheme.colors.inputBorder}`,
+                  backgroundColor: theme.colors.backgroundAlt,
+                  borderBottom: `1px solid ${theme.colors.inputBorder}`,
                   fontSize: "14px",
                   fontWeight: "600",
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                   textTransform: "capitalize",
                 }}>
                   {scope} Permissions
@@ -742,14 +744,14 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
                       alignItems: "center",
                       padding: "12px 16px",
                       borderBottom: index < scopePermissions.length - 1 
-                        ? `1px solid ${currentTheme.colors.grayLight}` 
+                        ? `1px solid ${theme.colors.grayLight}` 
                         : "none",
                       cursor: "pointer",
                       transition: "background-color 0.2s",
                     }}
                     onClick={() => togglePermission(permission.id)}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
+                      e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.backgroundColor = "transparent";
@@ -760,7 +762,7 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
                       width: "50px",
                       height: "28px",
                       backgroundColor: selectedPermissions.includes(permission.id) 
-                        ? currentTheme.colors.primary 
+                        ? theme.colors.primary 
                         : "#E5E7EB",
                       borderRadius: "14px",
                       position: "relative",
@@ -768,10 +770,10 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
                       cursor: "pointer",
                       transition: "all 0.3s ease",
                       border: selectedPermissions.includes(permission.id) 
-                        ? `2px solid ${currentTheme.colors.primary}` 
+                        ? `2px solid ${theme.colors.primary}` 
                         : "2px solid #D1D5DB",
                       boxShadow: selectedPermissions.includes(permission.id) 
-                        ? `0 0 0 3px ${currentTheme.colors.primary}20` 
+                        ? `0 0 0 3px ${theme.colors.primary}20` 
                         : "0 2px 4px rgba(0, 0, 0, 0.1)",
                     }}>
                       <div style={{
@@ -792,14 +794,14 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
                       <div style={{
                         fontSize: "14px",
                         fontWeight: "500",
-                        color: currentTheme.colors.textDark,
+                        color: theme.colors.textDark,
                         marginBottom: "2px",
                       }}>
                         {permission.name}
                       </div>
                       <div style={{
                         fontSize: "12px",
-                        color: currentTheme.colors.textMedium,
+                        color: theme.colors.textMedium,
                       }}>
                         {permission.description}
                       </div>
@@ -822,11 +824,11 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             style={{
               padding: "12px 24px",
               backgroundColor: "transparent",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               fontWeight: "500",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               cursor: "pointer",
               transition: "all 0.2s",
             }}
@@ -839,8 +841,8 @@ function CreateRoleModal({ isOpen, onClose, onSave, permissions }: CreateRoleMod
             style={{
               padding: "12px 24px",
               backgroundColor: isLoading || !name.trim() 
-                ? currentTheme.colors.textLight 
-                : currentTheme.colors.primary,
+                ? theme.colors.textLight 
+                : theme.colors.primary,
               color: "white",
               border: "none",
               borderRadius: "8px",

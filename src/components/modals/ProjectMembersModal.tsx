@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 
 interface User {
@@ -45,6 +45,7 @@ interface ProjectMembersModalProps {
 }
 
 export default function ProjectMembersModal({ project, onClose, onMembersUpdated }: ProjectMembersModalProps) {
+  const { theme } = useTheme();
   const [members, setMembers] = useState<ProjectMember[]>([]);
   const [availableUsers, setAvailableUsers] = useState<User[]>([]);
   const [assignableRoles, setAssignableRoles] = useState<Role[]>([]);
@@ -206,14 +207,14 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: currentTheme.colors.modalOverlay,
+        backgroundColor: theme.colors.modalOverlay,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         zIndex: 1000
       }}>
         <div style={{
-          backgroundColor: currentTheme.colors.modalBackground,
+          backgroundColor: theme.colors.modalBackground,
           borderRadius: '12px',
           padding: '32px',
           width: '700px',
@@ -234,14 +235,14 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
               <h2 style={{
                 fontSize: '24px',
                 fontWeight: '600',
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 margin: '0 0 4px 0'
               }}>
                 {project.name} Members
               </h2>
               <p style={{
                 fontSize: '14px',
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 margin: 0
               }}>
                 Manage project members and their permissions
@@ -251,7 +252,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
               <button
                 onClick={() => setShowAddMembersModal(true)}
                 style={{
-                  backgroundColor: currentTheme.colors.buttonPrimary,
+                  backgroundColor: theme.colors.buttonPrimary,
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -271,7 +272,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                 onClick={onClose}
                 style={{
                   backgroundColor: 'transparent',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   border: 'none',
                   borderRadius: '6px',
                   padding: '8px',
@@ -302,12 +303,12 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
           {/* Permission Notice */}
           {!canAssignRoles && (
             <div style={{
-              backgroundColor: currentTheme.colors.infoLight,
-              border: `1px solid ${currentTheme.colors.info}`,
+              backgroundColor: theme.colors.infoLight,
+              border: `1px solid ${theme.colors.info}`,
               borderRadius: '8px',
               padding: '12px',
               marginBottom: '16px',
-              color: currentTheme.colors.info,
+              color: theme.colors.info,
               fontSize: '14px'
             }}>
               <strong>Note:</strong> You can manage project permissions but cannot assign roles. Contact an administrator for role assignment capabilities.
@@ -323,7 +324,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
               <div style={{
                 textAlign: 'center',
                 padding: '40px',
-                color: currentTheme.colors.textMedium
+                color: theme.colors.textMedium
               }}>
                 Loading members...
               </div>
@@ -331,13 +332,13 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
               <div style={{
                 textAlign: 'center',
                 padding: '40px',
-                color: currentTheme.colors.textMedium
+                color: theme.colors.textMedium
               }}>
                 <p>No members found in this project.</p>
                 <button
                   onClick={() => setShowAddMembersModal(true)}
                   style={{
-                    backgroundColor: currentTheme.colors.buttonPrimary,
+                    backgroundColor: theme.colors.buttonPrimary,
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
@@ -358,9 +359,9 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                     key={member.id}
                     style={{
                       padding: '16px',
-                      backgroundColor: currentTheme.colors.backgroundAlt,
+                      backgroundColor: theme.colors.backgroundAlt,
                       borderRadius: '8px',
-                      border: `1px solid ${currentTheme.colors.inputBorder}`
+                      border: `1px solid ${theme.colors.inputBorder}`
                     }}
                   >
                     <div style={{
@@ -378,7 +379,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                           <div style={{
                             width: '40px',
                             height: '40px',
-                            backgroundColor: currentTheme.colors.buttonPrimary,
+                            backgroundColor: theme.colors.buttonPrimary,
                             borderRadius: '50%',
                             display: 'flex',
                             alignItems: 'center',
@@ -393,13 +394,13 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                             <div style={{
                               fontSize: '16px',
                               fontWeight: '500',
-                              color: currentTheme.colors.textDark
+                              color: theme.colors.textDark
                             }}>
                               {formatUserName(member.user.email)}
                             </div>
                             <div style={{
                               fontSize: '14px',
-                              color: currentTheme.colors.textMedium
+                              color: theme.colors.textMedium
                             }}>
                               {member.user.email}
                             </div>
@@ -414,8 +415,8 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                           flexWrap: 'wrap'
                         }}>
                           <span style={{
-                            backgroundColor: currentTheme.colors.buttonSecondary,
-                            color: currentTheme.colors.textDark,
+                            backgroundColor: theme.colors.buttonSecondary,
+                            color: theme.colors.textDark,
                             padding: '4px 8px',
                             borderRadius: '4px',
                             fontSize: '12px',
@@ -467,8 +468,8 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                           onClick={() => setEditingMember(member)}
                           style={{
                             backgroundColor: 'transparent',
-                            color: currentTheme.colors.buttonPrimary,
-                            border: `1px solid ${currentTheme.colors.buttonPrimary}`,
+                            color: theme.colors.buttonPrimary,
+                            border: `1px solid ${theme.colors.buttonPrimary}`,
                             borderRadius: '6px',
                             padding: '6px 12px',
                             fontSize: '12px',
@@ -503,15 +504,15 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
           <div style={{
             marginTop: '24px',
             paddingTop: '16px',
-            borderTop: `1px solid ${currentTheme.colors.inputBorder}`,
+            borderTop: `1px solid ${theme.colors.inputBorder}`,
             display: 'flex',
             justifyContent: 'flex-end'
           }}>
             <button
               onClick={onClose}
               style={{
-                backgroundColor: currentTheme.colors.buttonSecondary,
-                color: currentTheme.colors.textDark,
+                backgroundColor: theme.colors.buttonSecondary,
+                color: theme.colors.textDark,
                 border: 'none',
                 borderRadius: '8px',
                 padding: '10px 20px',
@@ -534,14 +535,14 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: currentTheme.colors.modalOverlay,
+          backgroundColor: theme.colors.modalOverlay,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 1100
         }}>
           <div style={{
-            backgroundColor: currentTheme.colors.modalBackground,
+            backgroundColor: theme.colors.modalBackground,
             borderRadius: '12px',
             padding: '32px',
             width: '500px',
@@ -560,7 +561,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
               <h3 style={{
                 fontSize: '20px',
                 fontWeight: '600',
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 margin: 0
               }}>
                 Add Members to Project
@@ -569,7 +570,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                 onClick={() => setShowAddMembersModal(false)}
                 style={{
                   backgroundColor: 'transparent',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   border: 'none',
                   borderRadius: '6px',
                   padding: '8px',
@@ -592,11 +593,11 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                 style={{
                   width: '100%',
                   padding: '12px',
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: '8px',
                   fontSize: '14px',
-                  backgroundColor: currentTheme.colors.background,
-                  color: currentTheme.colors.textDark
+                  backgroundColor: theme.colors.background,
+                  color: theme.colors.textDark
                 }}
               />
             </div>
@@ -610,7 +611,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                 <div style={{
                   textAlign: 'center',
                   padding: '40px',
-                  color: currentTheme.colors.textMedium
+                  color: theme.colors.textMedium
                 }}>
                   {availableUsers.length === 0 ? 
                     'No available users to add' : 
@@ -628,12 +629,12 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                         gap: '12px',
                         padding: '12px',
                         backgroundColor: selectedUsers.includes(user.id) 
-                          ? currentTheme.colors.backgroundAlt 
+                          ? theme.colors.backgroundAlt 
                           : 'transparent',
                         borderRadius: '8px',
                         cursor: 'pointer',
                         border: selectedUsers.includes(user.id) 
-                          ? `1px solid ${currentTheme.colors.buttonPrimary}` 
+                          ? `1px solid ${theme.colors.buttonPrimary}` 
                           : '1px solid transparent'
                       }}
                     >
@@ -650,13 +651,13 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                         style={{
                           width: '16px',
                           height: '16px',
-                          accentColor: currentTheme.colors.buttonPrimary
+                          accentColor: theme.colors.buttonPrimary
                         }}
                       />
                       <div style={{
                         width: '32px',
                         height: '32px',
-                        backgroundColor: currentTheme.colors.buttonPrimary,
+                        backgroundColor: theme.colors.buttonPrimary,
                         borderRadius: '50%',
                         display: 'flex',
                         alignItems: 'center',
@@ -671,13 +672,13 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                         <div style={{
                           fontSize: '14px',
                           fontWeight: '500',
-                          color: currentTheme.colors.textDark
+                          color: theme.colors.textDark
                         }}>
                           {formatUserName(user.email)}
                         </div>
                         <div style={{
                           fontSize: '12px',
-                          color: currentTheme.colors.textMedium
+                          color: theme.colors.textMedium
                         }}>
                           {user.email}
                         </div>
@@ -699,8 +700,8 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                 disabled={isAddingMembers}
                 style={{
                   backgroundColor: 'transparent',
-                  color: currentTheme.colors.textMedium,
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  color: theme.colors.textMedium,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: '8px',
                   padding: '10px 20px',
                   fontSize: '14px',
@@ -715,7 +716,7 @@ export default function ProjectMembersModal({ project, onClose, onMembersUpdated
                 onClick={handleAddMembers}
                 disabled={selectedUsers.length === 0 || isAddingMembers}
                 style={{
-                  backgroundColor: currentTheme.colors.buttonPrimary,
+                  backgroundColor: theme.colors.buttonPrimary,
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -763,6 +764,7 @@ function EditMemberPermissionsModal({
   onClose, 
   onSave 
 }: EditMemberPermissionsModalProps) {
+  const { theme } = useTheme();
   const [roleId, setRoleId] = useState(member.role_id);
   const [canUploadFiles, setCanUploadFiles] = useState(member.can_upload_files);
   const [canDeleteFiles, setCanDeleteFiles] = useState(member.can_delete_files);
@@ -800,14 +802,14 @@ function EditMemberPermissionsModal({
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: currentTheme.colors.modalOverlay,
+      backgroundColor: theme.colors.modalOverlay,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
       zIndex: 1200
     }}>
       <div style={{
-        backgroundColor: currentTheme.colors.modalBackground,
+        backgroundColor: theme.colors.modalBackground,
         borderRadius: '12px',
         padding: '32px',
         width: '420px',
@@ -823,14 +825,14 @@ function EditMemberPermissionsModal({
             <h3 style={{
               fontSize: '18px',
               fontWeight: '600',
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               margin: '0 0 4px 0'
             }}>
               Edit Member Permissions
             </h3>
             <p style={{
               fontSize: '14px',
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               margin: 0
             }}>
               {formatUserName(member.user.email)}
@@ -840,7 +842,7 @@ function EditMemberPermissionsModal({
             onClick={onClose}
             style={{
               backgroundColor: 'transparent',
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               border: 'none',
               borderRadius: '6px',
               padding: '8px',
@@ -860,7 +862,7 @@ function EditMemberPermissionsModal({
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 marginBottom: '8px'
               }}>
                 Role {assignableRoles.length > 0 && `(${assignableRoles.length} available)`}
@@ -871,11 +873,11 @@ function EditMemberPermissionsModal({
                 style={{
                   width: '100%',
                   padding: '10px',
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: '6px',
                   fontSize: '14px',
-                  backgroundColor: currentTheme.colors.background,
-                  color: currentTheme.colors.textDark
+                  backgroundColor: theme.colors.background,
+                  color: theme.colors.textDark
                 }}
               >
                 <option value="">No specific role</option>
@@ -888,7 +890,7 @@ function EditMemberPermissionsModal({
               {assignableRoles.length === 0 && (
                 <p style={{
                   fontSize: '12px',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   marginTop: '4px',
                   fontStyle: 'italic'
                 }}>
@@ -899,21 +901,21 @@ function EditMemberPermissionsModal({
           ) : (
             <div style={{
               padding: '12px',
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: '6px',
-              border: `1px solid ${currentTheme.colors.inputBorder}`
+              border: `1px solid ${theme.colors.inputBorder}`
             }}>
               <div style={{
                 fontSize: '14px',
                 fontWeight: '500',
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 marginBottom: '4px'
               }}>
                 Current Role: {member.role_name}
               </div>
               <p style={{
                 fontSize: '12px',
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 margin: 0
               }}>
                 You do not have permission to assign or modify roles. Contact your administrator for role assignment capabilities.
@@ -927,7 +929,7 @@ function EditMemberPermissionsModal({
               display: 'block',
               fontSize: '14px',
               fontWeight: '500',
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               marginBottom: '12px'
             }}>
               Project Permissions
@@ -947,12 +949,12 @@ function EditMemberPermissionsModal({
                   style={{
                     width: '16px',
                     height: '16px',
-                    accentColor: currentTheme.colors.buttonPrimary
+                    accentColor: theme.colors.buttonPrimary
                   }}
                 />
                 <span style={{
                   fontSize: '14px',
-                  color: currentTheme.colors.textDark
+                  color: theme.colors.textDark
                 }}>
                   Upload Documents
                 </span>
@@ -971,12 +973,12 @@ function EditMemberPermissionsModal({
                   style={{
                     width: '16px',
                     height: '16px',
-                    accentColor: currentTheme.colors.buttonPrimary
+                    accentColor: theme.colors.buttonPrimary
                   }}
                 />
                 <span style={{
                   fontSize: '14px',
-                  color: currentTheme.colors.textDark
+                  color: theme.colors.textDark
                 }}>
                   Delete Documents
                 </span>
@@ -995,12 +997,12 @@ function EditMemberPermissionsModal({
                   style={{
                     width: '16px',
                     height: '16px',
-                    accentColor: currentTheme.colors.buttonPrimary
+                    accentColor: theme.colors.buttonPrimary
                   }}
                 />
                 <span style={{
                   fontSize: '14px',
-                  color: currentTheme.colors.textDark
+                  color: theme.colors.textDark
                 }}>
                   Edit project info
                 </span>
@@ -1011,10 +1013,10 @@ function EditMemberPermissionsModal({
           {/* Permission Info */}
           <div style={{
             padding: '12px',
-            backgroundColor: currentTheme.colors.infoLight,
+            backgroundColor: theme.colors.infoLight,
             borderRadius: '6px',
             fontSize: '12px',
-            color: currentTheme.colors.info,
+            color: theme.colors.info,
           }}>
             <strong>Note:</strong> Project permissions are granular settings that work alongside role-based permissions. 
             {canAssignRoles ? 
@@ -1035,8 +1037,8 @@ function EditMemberPermissionsModal({
             disabled={isSaving}
             style={{
               backgroundColor: 'transparent',
-              color: currentTheme.colors.textMedium,
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              color: theme.colors.textMedium,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: '8px',
               padding: '10px 20px',
               fontSize: '14px',
@@ -1051,7 +1053,7 @@ function EditMemberPermissionsModal({
             onClick={handleSave}
             disabled={isSaving}
             style={{
-              backgroundColor: currentTheme.colors.buttonPrimary,
+              backgroundColor: theme.colors.buttonPrimary,
               color: 'white',
               border: 'none',
               borderRadius: '8px',

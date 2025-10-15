@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 
 export interface NotificationProps {
   type: 'success' | 'error' | 'warning' | 'info';
@@ -12,6 +12,7 @@ export interface NotificationProps {
 }
 
 export function Notification({ type, message, duration = 5000, onClose }: NotificationProps) {
+  const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(true);
   const [isLeaving, setIsLeaving] = useState(false);
 
@@ -50,7 +51,7 @@ export function Notification({ type, message, duration = 5000, onClose }: Notifi
       icon: '⚠'
     },
     info: {
-      bg: currentTheme.colors.primary,
+      bg: theme.colors.primary,
       text: 'white',
       icon: 'ℹ'
     }

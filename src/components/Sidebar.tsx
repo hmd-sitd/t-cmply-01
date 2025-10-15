@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import type { ChatMessage } from '../types';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import { usePersistentChat } from '../hooks/usePersistentChat';
 import { apiService } from '../services/api';
 
@@ -29,6 +29,7 @@ export default function Sidebar({
   onActiveThreadChanged,
   onSendMessageToPersistentChat
 }: SidebarProps) {
+  const { theme } = useTheme();
   const [hoveredChat, setHoveredChat] = useState<string | null>(null);
   const [editingChat, setEditingChat] = useState<string | null>(null);
   const [editTitle, setEditTitle] = useState('');
@@ -256,7 +257,7 @@ export default function Sidebar({
           left: 0,
           bottom: 0,
           width: collapsed ? "60px" : "240px",
-          backgroundColor: currentTheme.colors.sidebar,
+          backgroundColor: theme.colors.sidebar,
           display: "flex",
           flexDirection: "column",
           transition: "width 0.3s ease",
@@ -275,17 +276,17 @@ export default function Sidebar({
         >
           {!collapsed && (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              {currentTheme.logo.imageUrl && (
+              {theme.logo.imageUrl && (
                 <img 
-                  src={currentTheme.logo.imageUrl} 
-                  alt={currentTheme.companyName}
+                  src={theme.logo.imageUrl} 
+                  alt={theme.companyName}
                   style={{
                     height: "24px",
                     width: "auto"
                   }}
                 />
               )}
-              {!currentTheme.logo.useImageOnly && (
+              {!theme.logo.useImageOnly && (
                 <h1
                   style={{
                     color: "white",
@@ -294,7 +295,7 @@ export default function Sidebar({
                     margin: 0,
                   }}
                 >
-                  {currentTheme.companyName}
+                  {theme.companyName}
                 </h1>
               )}
             </div>

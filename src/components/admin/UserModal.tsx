@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import type { User, Role } from '../../types';
 
 interface AdminUser extends User {
@@ -23,6 +23,7 @@ export default function UserModal({
   onSave,
   onResetPassword
 }: UserModalProps) {
+  const { theme } = useTheme();
   const [isActive, setIsActive] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [resetToken, setResetToken] = useState<string | null>(null);
@@ -81,7 +82,7 @@ export default function UserModal({
     >
       <div
         style={{
-          backgroundColor: currentTheme.colors.surface,
+          backgroundColor: theme.colors.surface,
           borderRadius: "12px",
           padding: "32px",
           width: "100%",
@@ -100,7 +101,7 @@ export default function UserModal({
           <h2 style={{
             fontSize: "24px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: 0,
           }}>
             Edit User
@@ -112,7 +113,7 @@ export default function UserModal({
               border: "none",
               fontSize: "24px",
               cursor: "pointer",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               padding: "4px",
             }}
           >
@@ -123,7 +124,7 @@ export default function UserModal({
         {/* User Info */}
         <div style={{
           padding: "20px",
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          backgroundColor: theme.colors.backgroundAlt,
           borderRadius: "8px",
           marginBottom: "24px",
         }}>
@@ -136,7 +137,7 @@ export default function UserModal({
             <div style={{
               width: "48px",
               height: "48px",
-              backgroundColor: currentTheme.colors.primary,
+              backgroundColor: theme.colors.primary,
               borderRadius: "50%",
               display: "flex",
               alignItems: "center",
@@ -151,14 +152,14 @@ export default function UserModal({
               <div style={{
                 fontSize: "18px",
                 fontWeight: "600",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 marginBottom: "4px",
               }}>
                 {user.email}
               </div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}>
                 ID: {user.id} • Joined: {new Date(user.created_at).toLocaleDateString()}
               </div>
@@ -170,7 +171,7 @@ export default function UserModal({
             <div style={{
               fontSize: "14px",
               fontWeight: "500",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               marginBottom: "8px",
             }}>
               Current Roles
@@ -186,8 +187,8 @@ export default function UserModal({
                     key={role.id}
                     style={{
                       padding: "4px 12px",
-                      backgroundColor: `${currentTheme.colors.primary}20`,
-                      color: currentTheme.colors.primary,
+                      backgroundColor: `${theme.colors.primary}20`,
+                      color: theme.colors.primary,
                       borderRadius: "16px",
                       fontSize: "12px",
                       fontWeight: "500",
@@ -199,7 +200,7 @@ export default function UserModal({
               ) : (
                 <span style={{
                   fontSize: "14px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   fontStyle: "italic",
                 }}>
                   No roles assigned
@@ -217,7 +218,7 @@ export default function UserModal({
             gap: "12px",
             cursor: "pointer",
             fontSize: "16px",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
           }}>
             <input
               type="checkbox"
@@ -226,14 +227,14 @@ export default function UserModal({
               style={{
                 width: "18px",
                 height: "18px",
-                accentColor: currentTheme.colors.primary,
+                accentColor: theme.colors.primary,
               }}
             />
             User is active
           </label>
           <div style={{
             fontSize: "14px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             marginTop: "4px",
             marginLeft: "30px",
           }}>
@@ -244,21 +245,21 @@ export default function UserModal({
         {/* Password Reset Section */}
         <div style={{
           padding: "20px",
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          backgroundColor: theme.colors.backgroundAlt,
           borderRadius: "8px",
           marginBottom: "32px",
         }}>
           <h3 style={{
             fontSize: "16px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: "0 0 12px 0",
           }}>
             Password Reset
           </h3>
           <p style={{
             fontSize: "14px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             margin: "0 0 16px 0",
           }}>
             Generate a password reset token for this user. They can use this token to set a new password.
@@ -267,14 +268,14 @@ export default function UserModal({
           {resetToken && (
             <div style={{
               padding: "12px",
-              backgroundColor: `${currentTheme.colors.success}20`,
-              border: `1px solid ${currentTheme.colors.success}`,
+              backgroundColor: `${theme.colors.success}20`,
+              border: `1px solid ${theme.colors.success}`,
               borderRadius: "6px",
               marginBottom: "16px",
             }}>
               <div style={{
                 fontSize: "12px",
-                color: currentTheme.colors.success,
+                color: theme.colors.success,
                 fontWeight: "500",
                 marginBottom: "4px",
               }}>
@@ -282,7 +283,7 @@ export default function UserModal({
               </div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 fontFamily: "monospace",
                 wordBreak: "break-all",
               }}>
@@ -296,9 +297,9 @@ export default function UserModal({
             disabled={isLoading}
             style={{
               padding: "8px 16px",
-              backgroundColor: currentTheme.colors.buttonSecondary,
-              color: currentTheme.colors.primary,
-              border: `1px solid ${currentTheme.colors.primary}`,
+              backgroundColor: theme.colors.buttonSecondary,
+              color: theme.colors.primary,
+              border: `1px solid ${theme.colors.primary}`,
               borderRadius: "6px",
               fontSize: "14px",
               fontWeight: "500",
@@ -322,11 +323,11 @@ export default function UserModal({
             style={{
               padding: "12px 24px",
               backgroundColor: "transparent",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               fontWeight: "500",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               cursor: "pointer",
               transition: "all 0.2s",
             }}
@@ -338,7 +339,7 @@ export default function UserModal({
             disabled={isLoading}
             style={{
               padding: "12px 24px",
-              backgroundColor: isLoading ? currentTheme.colors.textLight : currentTheme.colors.primary,
+              backgroundColor: isLoading ? theme.colors.textLight : theme.colors.primary,
               color: "white",
               border: "none",
               borderRadius: "8px",

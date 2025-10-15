@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import { apiService } from '../services/api';
 
 interface ProjectFile {
@@ -30,6 +30,7 @@ export default function ProjectFilesView({
   onBack,
   onFileUpload
 }: ProjectFilesViewProps) {
+  const { theme } = useTheme();
   const [files, setFiles] = useState<ProjectFile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -198,12 +199,12 @@ export default function ProjectFilesView({
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      backgroundColor: currentTheme.colors.background,
+      backgroundColor: theme.colors.background,
     }}>
       {/* Header with Back Button */}
       <div style={{
         padding: "32px 40px",
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
       }}>
         <button
           onClick={onBack}
@@ -213,7 +214,7 @@ export default function ProjectFilesView({
             gap: "8px",
             background: "none",
             border: "none",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             fontSize: "14px",
             cursor: "pointer",
             marginBottom: "16px",
@@ -227,14 +228,14 @@ export default function ProjectFilesView({
         <h1 style={{
           fontSize: "32px",
           fontWeight: "600",
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           margin: "0 0 8px 0",
         }}>
           {projectName}
         </h1>
         <p style={{
           fontSize: "16px",
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
           margin: 0,
         }}>
           Project ID: {projectId}
@@ -247,7 +248,7 @@ export default function ProjectFilesView({
         display: "flex",
         gap: "16px",
         alignItems: "center",
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
       }}>
         <div style={{ position: "relative", flex: 1 }}>
           <SearchIcon />
@@ -260,12 +261,12 @@ export default function ProjectFilesView({
             style={{
               width: "100%",
               padding: "12px 16px 12px 44px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
-              backgroundColor: currentTheme.colors.inputBackground,
-              color: currentTheme.colors.textDark,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.textDark,
             }}
           />
         </div>
@@ -273,9 +274,9 @@ export default function ProjectFilesView({
         {uploadProgress && (
           <div style={{
             padding: "12px 16px",
-            backgroundColor: isUploading ? currentTheme.colors.primaryLight : 
+            backgroundColor: isUploading ? theme.colors.primaryLight : 
                            uploadProgress.includes('failed') ? '#fee' : '#efe',
-            color: isUploading ? currentTheme.colors.primary : 
+            color: isUploading ? theme.colors.primary : 
                   uploadProgress.includes('failed') ? '#c00' : '#060',
             borderRadius: "8px",
             fontSize: "14px",
@@ -288,8 +289,8 @@ export default function ProjectFilesView({
         {canUpload && (
           <label style={{
             padding: "12px 24px",
-            backgroundColor: isUploading ? currentTheme.colors.grayLight : currentTheme.colors.buttonPrimary,
-            color: isUploading ? currentTheme.colors.textMedium : "white",
+            backgroundColor: isUploading ? theme.colors.grayLight : theme.colors.buttonPrimary,
+            color: isUploading ? theme.colors.textMedium : "white",
             border: "none",
             borderRadius: "8px",
             fontSize: "14px",
@@ -303,12 +304,12 @@ export default function ProjectFilesView({
           }}
           onMouseEnter={(e) => {
             if (!isUploading) {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+              e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover;
             }
           }}
           onMouseLeave={(e) => {
             if (!isUploading) {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimary;
+              e.currentTarget.style.backgroundColor = theme.colors.buttonPrimary;
             }
           }}>
             <UploadIcon />
@@ -328,7 +329,7 @@ export default function ProjectFilesView({
       {/* File Type Tabs */}
       <div style={{
         padding: "0 40px",
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
         display: "flex",
         gap: "32px",
       }}>
@@ -343,21 +344,21 @@ export default function ProjectFilesView({
               border: "none",
               fontSize: "14px",
               fontWeight: "500",
-              color: activeTab === tab ? currentTheme.colors.primary : currentTheme.colors.textMedium,
+              color: activeTab === tab ? theme.colors.primary : theme.colors.textMedium,
               cursor: isLoading ? "not-allowed" : "pointer",
-              borderBottom: activeTab === tab ? `2px solid ${currentTheme.colors.primary}` : "2px solid transparent",
+              borderBottom: activeTab === tab ? `2px solid ${theme.colors.primary}` : "2px solid transparent",
               textTransform: "capitalize",
               transition: "color 0.2s",
               opacity: isLoading ? 0.6 : 1,
             }}
             onMouseEnter={(e) => {
               if (activeTab !== tab && !isLoading) {
-                e.currentTarget.style.color = currentTheme.colors.textDark;
+                e.currentTarget.style.color = theme.colors.textDark;
               }
             }}
             onMouseLeave={(e) => {
               if (activeTab !== tab && !isLoading) {
-                e.currentTarget.style.color = currentTheme.colors.textMedium;
+                e.currentTarget.style.color = theme.colors.textMedium;
               }
             }}
           >
@@ -374,7 +375,7 @@ export default function ProjectFilesView({
             justifyContent: "center",
             alignItems: "center",
             minHeight: "300px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
           }}>
             Loading files...
           </div>
@@ -386,10 +387,10 @@ export default function ProjectFilesView({
               gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 120px",
               gap: "16px",
               padding: "16px 0",
-              borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+              borderBottom: `1px solid ${theme.colors.grayLight}`,
               fontSize: "12px",
               fontWeight: "600",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               textTransform: "uppercase",
               letterSpacing: "0.5px",
             }}>
@@ -406,7 +407,7 @@ export default function ProjectFilesView({
               <div style={{
                 textAlign: "center",
                 padding: "60px 20px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}>
                 {searchTerm ? "No files found matching your search" : "No files in this project yet"}
                 {!searchTerm && canUpload && (
@@ -424,7 +425,7 @@ export default function ProjectFilesView({
                     gridTemplateColumns: "2fr 1fr 1fr 1fr 1fr 120px",
                     gap: "16px",
                     padding: "20px 0",
-                    borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+                    borderBottom: `1px solid ${theme.colors.grayLight}`,
                     alignItems: "center",
                   }}
                 >
@@ -437,7 +438,7 @@ export default function ProjectFilesView({
                     {getFileIcon(file.file_type || file.file_name)}
                     <span style={{
                       fontSize: "14px",
-                      color: currentTheme.colors.textDark,
+                      color: theme.colors.textDark,
                       fontWeight: "500",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -450,7 +451,7 @@ export default function ProjectFilesView({
 
                   <div style={{
                     fontSize: "14px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     textTransform: "uppercase",
                   }}>
                     {getFileType(file.file_type || file.file_name)}
@@ -458,21 +459,21 @@ export default function ProjectFilesView({
 
                   <div style={{
                     fontSize: "14px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                   }}>
                     {formatDate(file.uploaded_at)}
                   </div>
 
                   <div style={{
                     fontSize: "14px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                   }}>
                     Me
                   </div>
 
                   <div style={{
                     fontSize: "14px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                   }}>
                     {formatFileSize(file.file_size)}
                   </div>
@@ -489,7 +490,7 @@ export default function ProjectFilesView({
                         border: "none",
                         cursor: "pointer",
                         padding: "4px",
-                        color: currentTheme.colors.textMedium,
+                        color: theme.colors.textMedium,
                       }}
                       onClick={() => alert('View functionality coming soon')}
                     >
@@ -502,7 +503,7 @@ export default function ProjectFilesView({
                         border: "none",
                         cursor: "pointer",
                         padding: "4px",
-                        color: currentTheme.colors.textMedium,
+                        color: theme.colors.textMedium,
                       }}
                       onClick={() => alert('Download functionality coming soon')}
                     >
@@ -516,7 +517,7 @@ export default function ProjectFilesView({
                         border: "none",
                         cursor: "pointer",
                         padding: "4px",
-                        color: currentTheme.colors.error,
+                        color: theme.colors.error,
                       }}
                     >
                       <TrashIcon />
@@ -534,11 +535,11 @@ export default function ProjectFilesView({
                 alignItems: "center",
                 marginTop: "32px",
                 paddingTop: "24px",
-                borderTop: `1px solid ${currentTheme.colors.grayLight}`,
+                borderTop: `1px solid ${theme.colors.grayLight}`,
               }}>
                 <div style={{
                   fontSize: "14px",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                 }}>
                   Showing {indexOfFirstFile + 1}-{Math.min(indexOfLastFile, filteredFiles.length)} of {filteredFiles.length} files
                 </div>
@@ -550,7 +551,7 @@ export default function ProjectFilesView({
                     style={{
                       padding: "8px 12px",
                       backgroundColor: "transparent",
-                      color: currentTheme.colors.textMedium,
+                      color: theme.colors.textMedium,
                       border: "none",
                       borderRadius: "6px",
                       fontSize: "14px",
@@ -567,8 +568,8 @@ export default function ProjectFilesView({
                       onClick={() => setCurrentPage(page)}
                       style={{
                         padding: "8px 12px",
-                        backgroundColor: currentPage === page ? currentTheme.colors.primary : "transparent",
-                        color: currentPage === page ? "white" : currentTheme.colors.textMedium,
+                        backgroundColor: currentPage === page ? theme.colors.primary : "transparent",
+                        color: currentPage === page ? "white" : theme.colors.textMedium,
                         border: "none",
                         borderRadius: "6px",
                         fontSize: "14px",
@@ -586,7 +587,7 @@ export default function ProjectFilesView({
                     style={{
                       padding: "8px 12px",
                       backgroundColor: "transparent",
-                      color: currentTheme.colors.textMedium,
+                      color: theme.colors.textMedium,
                       border: "none",
                       borderRadius: "6px",
                       fontSize: "14px",
@@ -613,26 +614,29 @@ const BackArrowIcon = () => (
   </svg>
 );
 
-const SearchIcon = () => (
-  <svg
-    style={{
-      position: "absolute",
-      left: "16px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      width: "16px",
-      height: "16px",
-      color: currentTheme.colors.textMedium,
-    }}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.35-4.35" />
-  </svg>
-);
+function SearchIcon() {
+  const { theme } = useTheme();
+  return (
+    <svg
+      style={{
+        position: "absolute",
+        left: "16px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: "16px",
+        height: "16px",
+        color: theme.colors.textMedium,
+      }}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
 
 const UploadIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -663,12 +667,15 @@ const PdfIcon = () => (
   </svg>
 );
 
-const FileIcon = () => (
-  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={currentTheme.colors.textMedium} strokeWidth="2">
-    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-    <polyline points="13 2 13 9 20 9" />
-  </svg>
-);
+function FileIcon() {
+  const { theme } = useTheme();
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={theme.colors.textMedium} strokeWidth="2">
+      <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+      <polyline points="13 2 13 9 20 9" />
+    </svg>
+  );
+}
 
 const EyeIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

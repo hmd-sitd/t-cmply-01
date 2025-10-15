@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 
 interface SystemStats {
   totalUsers: number;
@@ -67,13 +67,15 @@ const DatabaseIcon = () => (
 );
 
 export default function SystemStats({ stats, isLoading, onRefresh }: SystemStatsProps) {
+  const { theme } = useTheme();
+  
   const statItems = [
     {
       title: "Total Users",
       value: stats.totalUsers,
       subtitle: `${stats.activeUsers} active`,
       icon: UsersIcon,
-      color: currentTheme.colors.primary,
+      color: theme.colors.primary,
     },
     {
       title: "Total Files",
@@ -111,14 +113,14 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
           <h2 style={{
             fontSize: "28px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: "0 0 8px 0",
           }}>
             System Overview
           </h2>
           <p style={{
             fontSize: "16px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             margin: 0,
           }}>
             Current system statistics and health metrics
@@ -131,9 +133,9 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
           style={{
             padding: "12px 20px",
             backgroundColor: "transparent",
-            border: `1px solid ${currentTheme.colors.inputBorder}`,
+            border: `1px solid ${theme.colors.inputBorder}`,
             borderRadius: "8px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             cursor: isLoading ? "not-allowed" : "pointer",
             display: "flex",
             alignItems: "center",
@@ -143,16 +145,16 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
           }}
           onMouseEnter={(e) => {
             if (!isLoading) {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
-              e.currentTarget.style.borderColor = currentTheme.colors.inputBorderFocus;
-              e.currentTarget.style.color = currentTheme.colors.textDark;
+              e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
+              e.currentTarget.style.borderColor = theme.colors.inputBorderFocus;
+              e.currentTarget.style.color = theme.colors.textDark;
             }
           }}
           onMouseLeave={(e) => {
             if (!isLoading) {
               e.currentTarget.style.backgroundColor = "transparent";
-              e.currentTarget.style.borderColor = currentTheme.colors.inputBorder;
-              e.currentTarget.style.color = currentTheme.colors.textMedium;
+              e.currentTarget.style.borderColor = theme.colors.inputBorder;
+              e.currentTarget.style.color = theme.colors.textMedium;
             }
           }}
         >
@@ -174,19 +176,19 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
             <div
               key={index}
               style={{
-                backgroundColor: currentTheme.colors.surface,
-                border: `1px solid ${currentTheme.colors.grayLight}`,
+                backgroundColor: theme.colors.surface,
+                border: `1px solid ${theme.colors.grayLight}`,
                 borderRadius: "12px",
                 padding: "24px",
                 transition: "all 0.2s",
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
-                e.currentTarget.style.borderColor = currentTheme.colors.inputBorderFocus;
+                e.currentTarget.style.borderColor = theme.colors.inputBorderFocus;
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.boxShadow = "none";
-                e.currentTarget.style.borderColor = currentTheme.colors.grayLight;
+                e.currentTarget.style.borderColor = theme.colors.grayLight;
               }}
             >
               <div style={{
@@ -198,7 +200,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
                 <div>
                   <div style={{
                     fontSize: "14px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     fontWeight: "500",
                     marginBottom: "8px",
                   }}>
@@ -207,14 +209,14 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
                   <div style={{
                     fontSize: "32px",
                     fontWeight: "bold",
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                     marginBottom: "4px",
                   }}>
                     {isLoading ? "..." : stat.value.toLocaleString()}
                   </div>
                   <div style={{
                     fontSize: "12px",
-                    color: currentTheme.colors.textLight,
+                    color: theme.colors.textLight,
                   }}>
                     {stat.subtitle}
                   </div>
@@ -241,15 +243,15 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
       {/* Vector Database Stats */}
       {stats.vectorStats && (
         <div style={{
-          backgroundColor: currentTheme.colors.surface,
-          border: `1px solid ${currentTheme.colors.grayLight}`,
+          backgroundColor: theme.colors.surface,
+          border: `1px solid ${theme.colors.grayLight}`,
           borderRadius: "12px",
           padding: "32px",
         }}>
           <h3 style={{
             fontSize: "20px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: "0 0 24px 0",
           }}>
             Vector Database Status
@@ -263,7 +265,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
             <div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 fontWeight: "500",
                 marginBottom: "8px",
               }}>
@@ -272,7 +274,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
               <div style={{
                 fontSize: "24px",
                 fontWeight: "bold",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
               }}>
                 {stats.vectorStats.total_objects.toLocaleString()}
               </div>
@@ -281,7 +283,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
             <div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 fontWeight: "500",
                 marginBottom: "8px",
               }}>
@@ -290,7 +292,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
               <div style={{
                 fontSize: "24px",
                 fontWeight: "bold",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
               }}>
                 {stats.vectorStats.total_vectors.toLocaleString()}
               </div>
@@ -299,7 +301,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
             <div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 fontWeight: "500",
                 marginBottom: "8px",
               }}>
@@ -308,7 +310,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
               <div style={{
                 fontSize: "16px",
                 fontWeight: "500",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 fontFamily: "monospace",
               }}>
                 {stats.vectorStats.collection_name}
@@ -318,7 +320,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
             <div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 fontWeight: "500",
                 marginBottom: "8px",
               }}>
@@ -327,7 +329,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
               <div style={{
                 fontSize: "24px",
                 fontWeight: "bold",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
               }}>
                 {stats.vectorStats.dimension}
               </div>
@@ -338,8 +340,8 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
 
       {/* Permissions Overview */}
       <div style={{
-        backgroundColor: currentTheme.colors.surface,
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        backgroundColor: theme.colors.surface,
+        border: `1px solid ${theme.colors.grayLight}`,
         borderRadius: "12px",
         padding: "32px",
         marginTop: "24px",
@@ -347,7 +349,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
         <h3 style={{
           fontSize: "20px",
           fontWeight: "600",
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           margin: "0 0 16px 0",
         }}>
           RBAC Overview
@@ -361,7 +363,7 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
           <div>
             <div style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               fontWeight: "500",
               marginBottom: "8px",
             }}>
@@ -370,14 +372,14 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
             <div style={{
               fontSize: "32px",
               fontWeight: "bold",
-              color: currentTheme.colors.primary,
+              color: theme.colors.primary,
               marginBottom: "8px",
             }}>
               {stats.totalPermissions}
             </div>
             <div style={{
               fontSize: "12px",
-              color: currentTheme.colors.textLight,
+              color: theme.colors.textLight,
             }}>
               System-wide permissions configured
             </div>
@@ -385,12 +387,12 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
 
           <div style={{
             padding: "20px",
-            backgroundColor: currentTheme.colors.backgroundAlt,
+            backgroundColor: theme.colors.backgroundAlt,
             borderRadius: "8px",
           }}>
             <div style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               fontWeight: "500",
               marginBottom: "12px",
             }}>
@@ -405,19 +407,19 @@ export default function SystemStats({ stats, isLoading, onRefresh }: SystemStats
                 width: "12px",
                 height: "12px",
                 borderRadius: "50%",
-                backgroundColor: currentTheme.colors.success,
+                backgroundColor: theme.colors.success,
               }} />
               <span style={{
                 fontSize: "16px",
                 fontWeight: "600",
-                color: currentTheme.colors.success,
+                color: theme.colors.success,
               }}>
                 Operational
               </span>
             </div>
             <div style={{
               fontSize: "12px",
-              color: currentTheme.colors.textLight,
+              color: theme.colors.textLight,
               marginTop: "4px",
             }}>
               All services running normally

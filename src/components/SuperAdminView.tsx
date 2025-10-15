@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import { useAdminStats } from '../hooks/useAdminStats';
 import { apiService } from '../services/api';
 import SystemStats from './admin/SystemStats';
@@ -18,6 +18,7 @@ interface SuperAdminViewProps {
 }
 
 export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [error, setError] = useState<string | null>(null);
   const [userInfo, setUserInfo] = useState<any>(null);
@@ -103,15 +104,15 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
     <>
       <div style={{ 
         minHeight: "100vh", 
-        backgroundColor: currentTheme.colors.background,
+        backgroundColor: theme.colors.background,
         display: "flex",
         fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
       }}>
         {/* Sidebar Navigation */}
         <div style={{
           width: "280px",
-          backgroundColor: currentTheme.colors.sidebar,
-          borderRight: `1px solid ${currentTheme.colors.grayLight}`,
+          backgroundColor: theme.colors.sidebar,
+          borderRight: `1px solid ${theme.colors.grayLight}`,
           display: "flex",
           flexDirection: "column",
           boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
@@ -130,10 +131,10 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
               gap: "12px",
               marginBottom: "16px"
             }}>
-              {currentTheme.logo.loginImageUrl ? (
+              {theme.logo.loginImageUrl ? (
                 <img 
-                  src={currentTheme.logo.loginImageUrl}
-                  alt={`${currentTheme.companyName} Logo`}
+                  src={theme.logo.loginImageUrl}
+                  alt={`${theme.companyName} Logo`}
                   style={{
                     height: "32px",
                     maxWidth: "140px",
@@ -147,8 +148,8 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
                   fontWeight: "bold",
                   color: "white"
                 }}>
-                  <span>{currentTheme.logo.text}</span>
-                  <span style={{ marginLeft: "4px" }}>{currentTheme.logo.subText}</span>
+                  <span>{theme.logo.text}</span>
+                  <span style={{ marginLeft: "4px" }}>{theme.logo.subText}</span>
                 </div>
               )}
             </div>
@@ -232,14 +233,14 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
             justifyContent: "space-between",
             alignItems: "center",
             padding: "20px 32px",
-            backgroundColor: currentTheme.colors.surface,
-            borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+            backgroundColor: theme.colors.surface,
+            borderBottom: `1px solid ${theme.colors.grayLight}`,
             position: "relative"
           }}>
             <h1 style={{
               fontSize: "24px",
               fontWeight: "600",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               margin: 0
             }}>
               {menuItems.find(item => item.id === activeTab)?.label || "Super Admin Panel"}
@@ -256,26 +257,26 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
                     gap: '12px',
                     padding: '8px 12px',
                     backgroundColor: 'white',
-                    border: `1px solid ${currentTheme.colors.grayLight}`,
+                    border: `1px solid ${theme.colors.grayLight}`,
                     borderRadius: '8px',
                     cursor: 'pointer',
                     fontSize: '14px',
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                     transition: 'all 0.2s',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.borderColor = currentTheme.colors.inputBorderFocus;
+                    e.currentTarget.style.borderColor = theme.colors.inputBorderFocus;
                     e.currentTarget.style.boxShadow = '0 2px 4px rgba(0, 0, 0, 0.1)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.borderColor = currentTheme.colors.grayLight;
+                    e.currentTarget.style.borderColor = theme.colors.grayLight;
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
                   <div style={{
                     width: '32px',
                     height: '32px',
-                    background: `linear-gradient(135deg, ${currentTheme.colors.primary} 0%, ${currentTheme.colors.primaryDark} 100%)`,
+                    background: `linear-gradient(135deg, ${theme.colors.primary} 0%, ${theme.colors.primaryDark} 100%)`,
                     borderRadius: '50%',
                     display: 'flex',
                     alignItems: 'center',
@@ -290,7 +291,7 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
                     <span style={{ fontWeight: '500', fontSize: '14px' }}>
                       {userInfo.email.split('@')[0]}
                     </span>
-                    <span style={{ fontSize: '12px', color: currentTheme.colors.textMedium }}>
+                    <span style={{ fontSize: '12px', color: theme.colors.textMedium }}>
                       Super Admin
                     </span>
                   </div>
@@ -318,7 +319,7 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
                     right: 0,
                     marginTop: "8px",
                     backgroundColor: "white",
-                    border: `1px solid ${currentTheme.colors.grayLight}`,
+                    border: `1px solid ${theme.colors.grayLight}`,
                     borderRadius: "8px",
                     boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
                     minWidth: "220px",
@@ -327,21 +328,21 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
                   }}>
                     <div style={{
                       padding: "12px 16px",
-                      borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
-                      backgroundColor: currentTheme.colors.backgroundAlt,
+                      borderBottom: `1px solid ${theme.colors.grayLight}`,
+                      backgroundColor: theme.colors.backgroundAlt,
                     }}>
-                      <div style={{ fontSize: '12px', color: currentTheme.colors.textMedium, marginBottom: '4px' }}>
+                      <div style={{ fontSize: '12px', color: theme.colors.textMedium, marginBottom: '4px' }}>
                         Signed in as
                       </div>
-                      <div style={{ fontWeight: '600', color: currentTheme.colors.textDark, fontSize: '14px' }}>
+                      <div style={{ fontWeight: '600', color: theme.colors.textDark, fontSize: '14px' }}>
                         {userInfo.email}
                       </div>
-                      <div style={{ fontSize: '12px', color: currentTheme.colors.textMedium, marginTop: '2px' }}>
+                      <div style={{ fontSize: '12px', color: theme.colors.textMedium, marginTop: '2px' }}>
                         Super Administrator
                       </div>
                     </div>
                     
-                    <div style={{ borderTop: `1px solid ${currentTheme.colors.grayLight}`, padding: '8px 0' }}>
+                    <div style={{ borderTop: `1px solid ${theme.colors.grayLight}`, padding: '8px 0' }}>
                       <button
                         onClick={(e) => {
                           e.preventDefault();
@@ -357,14 +358,14 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
                           border: 'none',
                           cursor: 'pointer',
                           fontSize: '14px',
-                          color: currentTheme.colors.error,
+                          color: theme.colors.error,
                           display: 'flex',
                           alignItems: 'center',
                           gap: '8px',
                           transition: 'background-color 0.2s',
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = `${currentTheme.colors.error}10`;
+                          e.currentTarget.style.backgroundColor = `${theme.colors.error}10`;
                         }}
                         onMouseLeave={(e) => {
                           e.currentTarget.style.backgroundColor = 'transparent';
@@ -390,12 +391,12 @@ export default function SuperAdminView({ onLogout }: SuperAdminViewProps) {
             {error && (
               <div style={{
                 padding: "12px 16px",
-                backgroundColor: `${currentTheme.colors.error}20`,
-                border: `1px solid ${currentTheme.colors.error}`,
+                backgroundColor: `${theme.colors.error}20`,
+                border: `1px solid ${theme.colors.error}`,
                 borderRadius: "8px",
                 marginBottom: "24px",
                 fontSize: "14px",
-                color: currentTheme.colors.error,
+                color: theme.colors.error,
                 display: "flex",
                 alignItems: "center",
                 gap: "8px",

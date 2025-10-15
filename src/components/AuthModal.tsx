@@ -4,7 +4,7 @@
 import type React from "react"
 import { useState } from "react"
 import { apiService } from "../services/api"
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface AuthModalProps {
   isOpen: boolean
@@ -13,6 +13,7 @@ interface AuthModalProps {
 }
 
 export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps) {
+  const { theme } = useTheme();
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState("") 
   const [password, setPassword] = useState("")
@@ -94,7 +95,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: currentTheme.colors.modalOverlay,
+        backgroundColor: theme.colors.modalOverlay,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -106,7 +107,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
     >
       <div
         style={{
-          backgroundColor: currentTheme.colors.modalBackground,
+          backgroundColor: theme.colors.modalBackground,
           borderRadius: "12px",
           padding: "48px",
           width: "100%",
@@ -127,7 +128,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             border: "none",
             fontSize: "24px",
             cursor: "pointer",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             padding: "4px",
           }}
         >
@@ -141,10 +142,10 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             marginBottom: "48px",
           }}
         >
-          {currentTheme.logo.loginImageUrl ? (
+          {theme.logo.loginImageUrl ? (
             <img 
-              src={currentTheme.logo.loginImageUrl}
-              alt={`${currentTheme.companyName} Logo`}
+              src={theme.logo.loginImageUrl}
+              alt={`${theme.companyName} Logo`}
               style={{
                 height: "80px",
                 maxWidth: "320px",
@@ -159,12 +160,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 gap: "8px",
                 fontSize: "32px",
                 fontWeight: "bold",
-                color: currentTheme.colors.primary,
+                color: theme.colors.primary,
               }}
             >
               <div
                 style={{
-                  background: `linear-gradient(135deg, ${currentTheme.colors.primary} 0%, ${currentTheme.colors.primaryDark} 100%)`,
+                  background: `linear-gradient(135deg, ${theme.colors.primary} 0%, ${theme.colors.primaryDark} 100%)`,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -173,11 +174,11 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   letterSpacing: "-1px",
                 }}
               >
-                {currentTheme.logo.text}
+                {theme.logo.text}
               </div>
               <div
                 style={{
-                  background: `linear-gradient(135deg, ${currentTheme.colors.primary} 0%, ${currentTheme.colors.primaryDark} 100%)`,
+                  background: `linear-gradient(135deg, ${theme.colors.primary} 0%, ${theme.colors.primaryDark} 100%)`,
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -186,7 +187,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   letterSpacing: "2px",
                 }}
               >
-                {currentTheme.logo.subText}
+                {theme.logo.subText}
               </div>
             </div>
           )}
@@ -196,7 +197,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
         <div
           style={{
             display: "flex",
-            backgroundColor: currentTheme.colors.backgroundAlt,
+            backgroundColor: theme.colors.backgroundAlt,
             borderRadius: "8px",
             padding: "4px",
             marginBottom: "32px",
@@ -213,8 +214,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
               padding: "8px 16px",
               borderRadius: "6px",
               border: "none",
-              backgroundColor: isLogin ? currentTheme.colors.primary : "transparent",
-              color: isLogin ? "white" : currentTheme.colors.textMedium,
+              backgroundColor: isLogin ? theme.colors.primary : "transparent",
+              color: isLogin ? "white" : theme.colors.textMedium,
               fontSize: "14px",
               fontWeight: "500",
               cursor: "pointer",
@@ -234,8 +235,8 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
               padding: "8px 16px",
               borderRadius: "6px",
               border: "none",
-              backgroundColor: !isLogin ? currentTheme.colors.primary : "transparent",
-              color: !isLogin ? "white" : currentTheme.colors.textMedium,
+              backgroundColor: !isLogin ? theme.colors.primary : "transparent",
+              color: !isLogin ? "white" : theme.colors.textMedium,
               fontSize: "14px",
               fontWeight: "500",
               cursor: "pointer",
@@ -255,7 +256,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 display: "block",
                 fontSize: "14px",
                 fontWeight: "500",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 marginBottom: "8px",
               }}
             >
@@ -271,12 +272,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
               style={{
                 width: "100%",
                 padding: "12px 16px",
-                border: `1px solid ${currentTheme.colors.inputBorder}`,
+                border: `1px solid ${theme.colors.inputBorder}`,
                 borderRadius: "8px",
                 fontSize: "16px",
                 outline: "none",
-                backgroundColor: currentTheme.colors.inputBackground,
-                color: currentTheme.colors.textDark,
+                backgroundColor: theme.colors.inputBackground,
+                color: theme.colors.textDark,
                 boxSizing: "border-box",
               }}
             />
@@ -289,7 +290,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 display: "block",
                 fontSize: "14px",
                 fontWeight: "500",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 marginBottom: "8px",
               }}
             >
@@ -306,12 +307,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                 style={{
                   width: "100%",
                   padding: "12px 48px 12px 16px",
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: "8px",
                   fontSize: "16px",
                   outline: "none",
-                  backgroundColor: currentTheme.colors.inputBackground,
-                  color: currentTheme.colors.textDark,
+                  backgroundColor: theme.colors.inputBackground,
+                  color: theme.colors.textDark,
                   boxSizing: "border-box",
                 }}
               />
@@ -326,7 +327,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
                   backgroundColor: "transparent",
                   border: "none",
                   cursor: "pointer",
-                  color: currentTheme.colors.textLight,
+                  color: theme.colors.textLight,
                   padding: "4px",
                 }}
               >
@@ -357,12 +358,12 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             <div
               style={{
                 padding: "12px",
-                backgroundColor: `${currentTheme.colors.error}20`,
-                border: `1px solid ${currentTheme.colors.error}`,
+                backgroundColor: `${theme.colors.error}20`,
+                border: `1px solid ${theme.colors.error}`,
                 borderRadius: "8px",
                 marginBottom: "16px",
                 fontSize: "14px",
-                color: currentTheme.colors.error,
+                color: theme.colors.error,
               }}
             >
               {error}
@@ -375,7 +376,7 @@ export default function AuthModal({ isOpen, onClose, onSuccess }: AuthModalProps
             style={{
               width: "100%",
               padding: "12px 24px",
-              backgroundColor: isLoading ? currentTheme.colors.textLight : currentTheme.colors.buttonPrimary,
+              backgroundColor: isLoading ? theme.colors.textLight : theme.colors.buttonPrimary,
               color: "white",
               border: "none",
               borderRadius: "8px",

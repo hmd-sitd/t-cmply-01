@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import type { ChatSettings } from '../types/index'; 
 import { DEFAULT_SETTINGS } from '../utils/constants';
 
@@ -18,6 +18,7 @@ export default function SettingsModal({
   currentSettings, 
   availableModels = [] 
 }: SettingsModalProps) {
+  const { theme } = useTheme();
   const [settings, setSettings] = useState<ChatSettings>(currentSettings);
 
   useEffect(() => {

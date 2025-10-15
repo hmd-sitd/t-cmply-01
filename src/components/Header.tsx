@@ -3,7 +3,7 @@
 
 import React from 'react';
 import UserProfile from './UserProfile';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface HeaderProps {
   activeTab: "chat" | "workspace" | "admin";
@@ -26,6 +26,8 @@ export default function Header({
   onAuthModalOpen,
   onLogout
 }: HeaderProps) {
+  const { theme } = useTheme();
+  
   return (
     <div
       style={{
@@ -33,15 +35,15 @@ export default function Header({
         justifyContent: "space-between",
         alignItems: "center",
         padding: "20px 40px",
-        backgroundColor: currentTheme.colors.surface,
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+        backgroundColor: theme.colors.surface,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
       }}
     >
       {/* Tab Toggle */}
       <div
         style={{
           display: "flex",
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          backgroundColor: theme.colors.backgroundAlt,
           borderRadius: "25px",
           padding: "4px",
         }}
@@ -52,20 +54,20 @@ export default function Header({
             padding: "8px 24px",
             borderRadius: "20px",
             border: "none",
-            backgroundColor: activeTab === "chat" ? currentTheme.colors.tabActive : "transparent",
-            color: activeTab === "chat" ? "white" : currentTheme.colors.tabInactive,
+            backgroundColor: activeTab === "chat" ? theme.colors.tabActive : "transparent",
+            color: activeTab === "chat" ? "white" : theme.colors.tabInactive,
             fontWeight: "500",
             cursor: "pointer",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {
             if (activeTab !== "chat") {
-              e.currentTarget.style.color = currentTheme.colors.tabInactiveHover;
+              e.currentTarget.style.color = theme.colors.tabInactiveHover;
             }
           }}
           onMouseLeave={(e) => {
             if (activeTab !== "chat") {
-              e.currentTarget.style.color = currentTheme.colors.tabInactive;
+              e.currentTarget.style.color = theme.colors.tabInactive;
             }
           }}
         >
@@ -79,20 +81,20 @@ export default function Header({
             padding: "8px 24px",
             borderRadius: "20px",
             border: "none",
-            backgroundColor: activeTab === "workspace" ? currentTheme.colors.tabActive : "transparent",
-            color: activeTab === "workspace" ? "white" : currentTheme.colors.tabInactive,
+            backgroundColor: activeTab === "workspace" ? theme.colors.tabActive : "transparent",
+            color: activeTab === "workspace" ? "white" : theme.colors.tabInactive,
             fontWeight: "500",
             cursor: "pointer",
             transition: "all 0.2s",
           }}
           onMouseEnter={(e) => {
             if (activeTab !== "workspace") {
-              e.currentTarget.style.color = currentTheme.colors.tabInactiveHover;
+              e.currentTarget.style.color = theme.colors.tabInactiveHover;
             }
           }}
           onMouseLeave={(e) => {
             if (activeTab !== "workspace") {
-              e.currentTarget.style.color = currentTheme.colors.tabInactive;
+              e.currentTarget.style.color = theme.colors.tabInactive;
             }
           }}
         >
@@ -107,20 +109,20 @@ export default function Header({
               padding: "8px 24px",
               borderRadius: "20px",
               border: "none",
-              backgroundColor: activeTab === "admin" ? currentTheme.colors.tabActive : "transparent",
-              color: activeTab === "admin" ? "white" : currentTheme.colors.tabInactive,
+              backgroundColor: activeTab === "admin" ? theme.colors.tabActive : "transparent",
+              color: activeTab === "admin" ? "white" : theme.colors.tabInactive,
               fontWeight: "500",
               cursor: "pointer",
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => {
               if (activeTab !== "admin") {
-                e.currentTarget.style.color = currentTheme.colors.tabInactiveHover;
+                e.currentTarget.style.color = theme.colors.tabInactiveHover;
               }
             }}
             onMouseLeave={(e) => {
               if (activeTab !== "admin") {
-                e.currentTarget.style.color = currentTheme.colors.tabInactive;
+                e.currentTarget.style.color = theme.colors.tabInactive;
               }
             }}
           >
@@ -138,11 +140,11 @@ export default function Header({
             alignItems: "center",
             gap: "8px",
             padding: "6px 12px",
-            backgroundColor: isBackendConnected ? `${currentTheme.colors.success}20` : `${currentTheme.colors.error}30`,
-            border: `1px solid ${isBackendConnected ? currentTheme.colors.success : currentTheme.colors.error}`,
+            backgroundColor: isBackendConnected ? `${theme.colors.success}20` : `${theme.colors.error}30`,
+            border: `1px solid ${isBackendConnected ? theme.colors.success : theme.colors.error}`,
             borderRadius: "6px",
             fontSize: "12px",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
           }}
         >
           <div
@@ -150,7 +152,7 @@ export default function Header({
               width: "6px",
               height: "6px",
               borderRadius: "50%",
-              backgroundColor: isBackendConnected ? currentTheme.colors.success : currentTheme.colors.error,
+              backgroundColor: isBackendConnected ? theme.colors.success : theme.colors.error,
             }}
           />
           {isBackendConnected ? "Connected" : connectionError || "Disconnected"}
@@ -164,7 +166,7 @@ export default function Header({
             onClick={onAuthModalOpen}
             style={{
               padding: "8px 16px",
-              backgroundColor: currentTheme.colors.buttonPrimary,
+              backgroundColor: theme.colors.buttonPrimary,
               color: "white",
               border: "none",
               borderRadius: "8px",
@@ -174,11 +176,11 @@ export default function Header({
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+              e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover;
               e.currentTarget.style.transform = "translateY(-1px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimary;
+              e.currentTarget.style.backgroundColor = theme.colors.buttonPrimary;
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >

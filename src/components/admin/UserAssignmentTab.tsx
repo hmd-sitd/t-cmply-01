@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 
 interface UnassignedUser {
@@ -25,6 +25,7 @@ interface UserAssignmentTabProps {
 }
 
 export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
+  const { theme } = useTheme();
   const [unassignedUsers, setUnassignedUsers] = useState<UnassignedUser[]>([]);
   const [organizations, setOrganizations] = useState<Organization[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -109,7 +110,7 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
         justifyContent: 'center',
         alignItems: 'center',
         height: '200px',
-        color: currentTheme.colors.textMedium,
+        color: theme.colors.textMedium,
       }}>
         Loading unassigned users...
       </div>
@@ -127,7 +128,7 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
         <h2 style={{
           fontSize: "24px",
           fontWeight: "600",
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           margin: 0,
         }}>
           User Assignment
@@ -137,9 +138,9 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
           disabled={isLoading}
           style={{
             padding: "8px 16px",
-            backgroundColor: currentTheme.colors.buttonSecondary,
-            color: currentTheme.colors.textDark,
-            border: `1px solid ${currentTheme.colors.inputBorder}`,
+            backgroundColor: theme.colors.buttonSecondary,
+            color: theme.colors.textDark,
+            border: `1px solid ${theme.colors.inputBorder}`,
             borderRadius: "6px",
             fontSize: "14px",
             cursor: isLoading ? "not-allowed" : "pointer",
@@ -153,9 +154,9 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
         <div style={{
           textAlign: "center",
           padding: "48px 24px",
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          backgroundColor: theme.colors.backgroundAlt,
           borderRadius: "8px",
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
         }}>
           <div style={{ fontSize: "18px", marginBottom: "8px" }}>
             No unassigned users found
@@ -168,7 +169,7 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
         <div style={{
           backgroundColor: "#FFFFFF",
           borderRadius: "8px",
-          border: `1px solid ${currentTheme.colors.inputBorder}`,
+          border: `1px solid ${theme.colors.inputBorder}`,
           overflow: "hidden",
         }}>
           <div style={{
@@ -176,11 +177,11 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
             gridTemplateColumns: "1fr 120px 200px 180px 120px",
             gap: "16px",
             padding: "16px 24px",
-            backgroundColor: currentTheme.colors.backgroundAlt,
-            borderBottom: `1px solid ${currentTheme.colors.inputBorder}`,
+            backgroundColor: theme.colors.backgroundAlt,
+            borderBottom: `1px solid ${theme.colors.inputBorder}`,
             fontSize: "14px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
           }}>
             <div>Email</div>
             <div>User Type</div>
@@ -197,13 +198,13 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
                 gridTemplateColumns: "1fr 120px 200px 180px 120px",
                 gap: "16px",
                 padding: "16px 24px",
-                borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+                borderBottom: `1px solid ${theme.colors.grayLight}`,
                 alignItems: "center",
               }}
             >
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 fontWeight: "500",
               }}>
                 {user.email}
@@ -213,11 +214,11 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
                 <span style={{
                   padding: "4px 8px",
                   backgroundColor: user.user_type === 'admin' ? 
-                    currentTheme.colors.warningLight : 
-                    currentTheme.colors.successLight,
+                    "#fef3c7" : 
+                    "#d1fae5",
                   color: user.user_type === 'admin' ? 
-                    currentTheme.colors.warning : 
-                    currentTheme.colors.success,
+                    "#f59e0b" : 
+                    theme.colors.success,
                   borderRadius: "4px",
                   fontSize: "12px",
                   fontWeight: "500",
@@ -234,11 +235,11 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
                   style={{
                     width: "100%",
                     padding: "8px",
-                    border: `1px solid ${currentTheme.colors.inputBorder}`,
+                    border: `1px solid ${theme.colors.inputBorder}`,
                     borderRadius: "4px",
                     fontSize: "13px",
                     backgroundColor: "#FFFFFF",
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                   }}
                 >
                   <option value="">Select organization...</option>
@@ -252,7 +253,7 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
 
               <div style={{
                 fontSize: "13px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}>
                 {formatDate(user.created_at)}
               </div>
@@ -266,7 +267,7 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
                   }
                   style={{
                     padding: "6px 12px",
-                    backgroundColor: currentTheme.colors.buttonPrimary,
+                    backgroundColor: theme.colors.buttonPrimary,
                     color: "white",
                     border: "none",
                     borderRadius: "4px",
@@ -291,10 +292,10 @@ export default function UserAssignmentTab({ onError }: UserAssignmentTabProps) {
       <div style={{
         marginTop: "16px",
         padding: "12px 16px",
-        backgroundColor: currentTheme.colors.infoLight,
+        backgroundColor: "#dbeafe",
         borderRadius: "6px",
         fontSize: "13px",
-        color: currentTheme.colors.info,
+        color: theme.colors.info,
       }}>
         <strong>Note:</strong> Users without organization assignment cannot access projects or be added as project members. 
         Assign them to organizations to enable project participation.

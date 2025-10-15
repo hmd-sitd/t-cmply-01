@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { useAdminUsers } from '../../hooks/useAdminUsers';
 import { useAdminRoles } from '../../hooks/useAdminRoles';
 import type { User, Role } from '../../types';
@@ -16,6 +16,7 @@ interface UsersTabProps {
 }
 
 export default function UsersTab({ onError }: UsersTabProps) {
+  const { theme } = useTheme();
   const {
     users,
     isLoading,
@@ -63,19 +64,19 @@ export default function UsersTab({ onError }: UsersTabProps) {
       <div style={{
         padding: '32px',
         textAlign: 'center',
-        backgroundColor: currentTheme.colors.backgroundLight,
+        backgroundColor: theme.colors.backgroundLight,
         borderRadius: '12px',
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
       }}>
         <div style={{ fontSize: '24px', marginBottom: '16px' }}>🔒</div>
         <h3 style={{ 
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           marginBottom: '8px',
           fontSize: '18px'
         }}>
           Access Denied
         </h3>
-        <p style={{ color: currentTheme.colors.textMedium }}>
+        <p style={{ color: theme.colors.textMedium }}>
           You don't have permission to manage users. Admin access required.
         </p>
       </div>
@@ -185,14 +186,14 @@ const handleAssignRole = async (userId: number, roleId: number) => {
     displayRoles.push(...assignedRoles);
     
     if (displayRoles.length === 0) {
-      return <span style={{ color: currentTheme.colors.textLight }}>No roles</span>;
+      return <span style={{ color: theme.colors.textLight }}>No roles</span>;
     }
 
     return displayRoles.map((role, index) => (
       <span
         key={role.id || `role-${index}`}
         style={{
-          backgroundColor: currentTheme.colors.primary,
+          backgroundColor: theme.colors.primary,
           color: 'white',
           padding: '4px 8px',
           borderRadius: '12px',
@@ -219,7 +220,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
       }}>
         <div>
           <h2 style={{ 
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: 0,
             fontSize: '24px',
             fontWeight: '600'
@@ -227,7 +228,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
             User Management
           </h2>
           <p style={{ 
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             margin: '4px 0 0 0',
             fontSize: '14px'
           }}>
@@ -239,7 +240,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
           onClick={() => loadUsers(currentPage * pageSize, pageSize, searchTerm, statusFilter)}
           disabled={isLoading}
           style={{
-            backgroundColor: currentTheme.colors.primary,
+            backgroundColor: theme.colors.primary,
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -269,10 +270,10 @@ const handleAssignRole = async (userId: number, roleId: number) => {
           style={{
             flex: 1,
             padding: '12px 16px',
-            border: `1px solid ${currentTheme.colors.grayLight}`,
+            border: `1px solid ${theme.colors.grayLight}`,
             borderRadius: '8px',
             fontSize: '14px',
-            backgroundColor: currentTheme.colors.backgroundLight
+            backgroundColor: theme.colors.backgroundLight
           }}
         />
 
@@ -284,10 +285,10 @@ const handleAssignRole = async (userId: number, roleId: number) => {
           }}
           style={{
             padding: '12px 16px',
-            border: `1px solid ${currentTheme.colors.grayLight}`,
+            border: `1px solid ${theme.colors.grayLight}`,
             borderRadius: '8px',
             fontSize: '14px',
-            backgroundColor: currentTheme.colors.backgroundLight,
+            backgroundColor: theme.colors.backgroundLight,
             minWidth: '120px'
           }}
         >
@@ -301,14 +302,14 @@ const handleAssignRole = async (userId: number, roleId: number) => {
       <div style={{
         backgroundColor: 'white',
         borderRadius: '12px',
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
         overflow: 'hidden'
       }}>
         {isLoading ? (
           <div style={{
             padding: '48px',
             textAlign: 'center',
-            color: currentTheme.colors.textMedium
+            color: theme.colors.textMedium
           }}>
             Loading users...
           </div>
@@ -316,7 +317,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
           <div style={{
             padding: '48px',
             textAlign: 'center',
-            color: currentTheme.colors.textMedium
+            color: theme.colors.textMedium
           }}>
             {searchTerm || statusFilter !== undefined ? 'No users match your search criteria.' : 'No users found.'}
           </div>
@@ -328,11 +329,11 @@ const handleAssignRole = async (userId: number, roleId: number) => {
               gridTemplateColumns: '1fr 1fr 120px 100px 140px 120px',
               gap: '16px',
               padding: '16px',
-              backgroundColor: currentTheme.colors.backgroundLight,
-              borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+              backgroundColor: theme.colors.backgroundLight,
+              borderBottom: `1px solid ${theme.colors.grayLight}`,
               fontSize: '12px',
               fontWeight: '600',
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               textTransform: 'uppercase',
               letterSpacing: '0.5px'
             }}>
@@ -353,7 +354,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                   gridTemplateColumns: '1fr 1fr 120px 100px 140px 120px',
                   gap: '16px',
                   padding: '16px',
-                  borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+                  borderBottom: `1px solid ${theme.colors.grayLight}`,
                   alignItems: 'center'
                 }}
               >
@@ -368,7 +369,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                       width: '32px',
                       height: '32px',
                       borderRadius: '50%',
-                      backgroundColor: currentTheme.colors.primary,
+                      backgroundColor: theme.colors.primary,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -380,14 +381,14 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                     </div>
                     <div>
                       <div style={{
-                        color: currentTheme.colors.textDark,
+                        color: theme.colors.textDark,
                         fontSize: '14px',
                         fontWeight: '500'
                       }}>
                         {user.email}
                       </div>
                       <div style={{
-                        color: currentTheme.colors.textLight,
+                        color: theme.colors.textLight,
                         fontSize: '12px'
                       }}>
                         ID: {user.id}
@@ -409,11 +410,11 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                     fontSize: '12px',
                     fontWeight: '500',
                     backgroundColor: user.is_active 
-                      ? `${currentTheme.colors.success}20` 
-                      : `${currentTheme.colors.error}20`,
+                      ? `${theme.colors.success}20` 
+                      : `${theme.colors.error}20`,
                     color: user.is_active 
-                      ? currentTheme.colors.success 
-                      : currentTheme.colors.error
+                      ? theme.colors.success 
+                      : theme.colors.error
                   }}>
                     {user.is_active ? 'Active' : 'Inactive'}
                   </span>
@@ -421,7 +422,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
 
                 {/* Joined Date */}
                 <div style={{
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   fontSize: '13px'
                 }}>
                   {formatDate(user.created_at)}
@@ -429,7 +430,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
 
                 {/* Last Updated */}
                 <div style={{
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   fontSize: '13px'
                 }}>
                   {formatDate(user.updated_at)}
@@ -441,12 +442,12 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                     onClick={() => setRoleAssignmentUser(user as AdminUser)}
                     style={{
                       backgroundColor: 'transparent',
-                      border: `1px solid ${currentTheme.colors.grayLight}`,
+                      border: `1px solid ${theme.colors.grayLight}`,
                       borderRadius: '6px',
                       padding: '6px 8px',
                       fontSize: '12px',
                       cursor: 'pointer',
-                      color: currentTheme.colors.textMedium
+                      color: theme.colors.textMedium
                     }}
                     title="Manage Roles"
                   >
@@ -457,12 +458,12 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                     onClick={() => handleToggleUserStatus(user.id, user.is_active)}
                     style={{
                       backgroundColor: 'transparent',
-                      border: `1px solid ${user.is_active ? currentTheme.colors.error : currentTheme.colors.success}`,
+                      border: `1px solid ${user.is_active ? theme.colors.error : theme.colors.success}`,
                       borderRadius: '6px',
                       padding: '6px 8px',
                       fontSize: '12px',
                       cursor: 'pointer',
-                      color: user.is_active ? currentTheme.colors.error : currentTheme.colors.success
+                      color: user.is_active ? theme.colors.error : theme.colors.success
                     }}
                     title={user.is_active ? 'Deactivate User' : 'Activate User'}
                   >
@@ -489,7 +490,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
             disabled={currentPage === 0 || isLoading}
             style={{
               backgroundColor: 'white',
-              border: `1px solid ${currentTheme.colors.grayLight}`,
+              border: `1px solid ${theme.colors.grayLight}`,
               borderRadius: '8px',
               padding: '8px 16px',
               fontSize: '14px',
@@ -501,7 +502,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
           </button>
           
           <span style={{
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             fontSize: '14px'
           }}>
             Page {currentPage + 1} of {totalPages}
@@ -512,7 +513,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
             disabled={currentPage === totalPages - 1 || isLoading}
             style={{
               backgroundColor: 'white',
-              border: `1px solid ${currentTheme.colors.grayLight}`,
+              border: `1px solid ${theme.colors.grayLight}`,
               borderRadius: '8px',
               padding: '8px 16px',
               fontSize: '14px',
@@ -555,7 +556,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
               marginBottom: '20px'
             }}>
               <h3 style={{
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 margin: 0,
                 fontSize: '18px'
               }}>
@@ -568,7 +569,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                   border: 'none',
                   fontSize: '20px',
                   cursor: 'pointer',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   padding: '4px'
                 }}
               >
@@ -579,7 +580,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
             {/* Current Roles */}
             <div style={{ marginBottom: '20px' }}>
               <h4 style={{
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 fontSize: '14px',
                 marginBottom: '8px'
               }}>
@@ -587,7 +588,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
               </h4>
               {roleAssignmentUser.roles.length === 0 ? (
                 <p style={{
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   fontSize: '14px',
                   margin: 0
                 }}>
@@ -602,15 +603,15 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                         display: 'flex',
                         alignItems: 'center',
                         gap: '8px',
-                        backgroundColor: currentTheme.colors.backgroundLight,
+                        backgroundColor: theme.colors.backgroundLight,
                         padding: '6px 12px',
                         borderRadius: '20px',
-                        border: `1px solid ${currentTheme.colors.grayLight}`
+                        border: `1px solid ${theme.colors.grayLight}`
                       }}
                     >
                       <span style={{
                         fontSize: '14px',
-                        color: currentTheme.colors.textDark
+                        color: theme.colors.textDark
                       }}>
                         {role.name}
                       </span>
@@ -619,7 +620,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                         style={{
                           backgroundColor: 'transparent',
                           border: 'none',
-                          color: currentTheme.colors.error,
+                          color: theme.colors.error,
                           fontSize: '12px',
                           cursor: 'pointer',
                           padding: '2px'
@@ -637,7 +638,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
             {/* Available Roles */}
             <div>
               <h4 style={{
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 fontSize: '14px',
                 marginBottom: '8px'
               }}>
@@ -654,22 +655,22 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                         justifyContent: 'space-between',
                         alignItems: 'center',
                         padding: '12px',
-                        border: `1px solid ${currentTheme.colors.grayLight}`,
+                        border: `1px solid ${theme.colors.grayLight}`,
                         borderRadius: '8px',
-                        backgroundColor: currentTheme.colors.backgroundLight
+                        backgroundColor: theme.colors.backgroundLight
                       }}
                     >
                       <div>
                         <div style={{
                           fontSize: '14px',
                           fontWeight: '500',
-                          color: currentTheme.colors.textDark
+                          color: theme.colors.textDark
                         }}>
                           {role.name}
                         </div>
                         <div style={{
                           fontSize: '12px',
-                          color: currentTheme.colors.textMedium
+                          color: theme.colors.textMedium
                         }}>
                           {role.description}
                         </div>
@@ -677,7 +678,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                       <button
                         onClick={() => handleAssignRole(roleAssignmentUser.id, role.id)}
                         style={{
-                          backgroundColor: currentTheme.colors.primary,
+                          backgroundColor: theme.colors.primary,
                           color: 'white',
                           border: 'none',
                           borderRadius: '6px',
@@ -693,7 +694,7 @@ const handleAssignRole = async (userId: number, roleId: number) => {
                 }
                 {roles.filter(role => role.is_active && !roleAssignmentUser.roles.find(ur => ur.id === role.id)).length === 0 && (
                   <p style={{
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     fontSize: '14px',
                     margin: 0,
                     textAlign: 'center',

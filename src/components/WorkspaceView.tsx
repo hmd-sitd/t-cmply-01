@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import { apiService } from '../services/api';
 import CreateProjectModal from '../components/modals/CreateProjectModal';
 import ProjectFilesView from './ProjectFilesView';
@@ -25,6 +25,7 @@ interface WorkspaceViewProps {
 }
 
 export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
+  const { theme } = useTheme();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -158,24 +159,24 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
       height: "100%",
       display: "flex",
       flexDirection: "column",
-      backgroundColor: currentTheme.colors.background,
+      backgroundColor: theme.colors.background,
     }}>
       {/* Header */}
       <div style={{
         padding: "32px 40px",
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
       }}>
         <h1 style={{
           fontSize: "32px",
           fontWeight: "600",
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           margin: "0 0 8px 0",
         }}>
           Workspace
         </h1>
         <p style={{
           fontSize: "16px",
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
           margin: 0,
         }}>
           Manage your projects and documents
@@ -188,7 +189,7 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
         display: "flex",
         gap: "16px",
         alignItems: "center",
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
       }}>
         <div style={{ position: "relative", flex: 1 }}>
           <SearchIcon />
@@ -200,12 +201,12 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
             style={{
               width: "100%",
               padding: "12px 16px 12px 44px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
-              backgroundColor: currentTheme.colors.inputBackground,
-              color: currentTheme.colors.textDark,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.textDark,
             }}
           />
         </div>
@@ -215,7 +216,7 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
             onClick={() => setShowCreateModal(true)}
             style={{
               padding: "12px 24px",
-              backgroundColor: currentTheme.colors.buttonPrimary,
+              backgroundColor: theme.colors.buttonPrimary,
               color: "white",
               border: "none",
               borderRadius: "8px",
@@ -228,10 +229,10 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+              e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimary;
+              e.currentTarget.style.backgroundColor = theme.colors.buttonPrimary;
             }}
           >
             <PlusIcon />
@@ -251,7 +252,7 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
           <h2 style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: 0,
           }}>
             Your Projects
@@ -265,7 +266,7 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
             justifyContent: "center",
             alignItems: "center",
             minHeight: "300px",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
           }}>
             Loading projects...
           </div>
@@ -273,21 +274,21 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
           <div style={{
             textAlign: "center",
             padding: "60px 20px",
-            backgroundColor: currentTheme.colors.surface,
+            backgroundColor: theme.colors.surface,
             borderRadius: "12px",
-            border: `1px solid ${currentTheme.colors.grayLight}`,
+            border: `1px solid ${theme.colors.grayLight}`,
           }}>
             <div style={{
               fontSize: "18px",
               fontWeight: "500",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               marginBottom: "8px",
             }}>
               {searchTerm ? "No projects found" : "No projects yet"}
             </div>
             <div style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}>
               {canCreateProject && !searchTerm && "Create your first project to get started"}
             </div>
@@ -317,11 +318,11 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
             alignItems: "center",
             marginTop: "32px",
             paddingTop: "24px",
-            borderTop: `1px solid ${currentTheme.colors.grayLight}`,
+            borderTop: `1px solid ${theme.colors.grayLight}`,
           }}>
             <div style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}>
               Showing {indexOfFirstProject + 1}-{Math.min(indexOfLastProject, filteredProjects.length)} of {filteredProjects.length} projects
             </div>
@@ -333,7 +334,7 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
                 style={{
                   padding: "8px 12px",
                   backgroundColor: "transparent",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   border: "none",
                   borderRadius: "6px",
                   fontSize: "14px",
@@ -350,8 +351,8 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
                   onClick={() => setCurrentPage(page)}
                   style={{
                     padding: "8px 12px",
-                    backgroundColor: currentPage === page ? currentTheme.colors.primary : "transparent",
-                    color: currentPage === page ? "white" : currentTheme.colors.textMedium,
+                    backgroundColor: currentPage === page ? theme.colors.primary : "transparent",
+                    color: currentPage === page ? "white" : theme.colors.textMedium,
                     border: "none",
                     borderRadius: "6px",
                     fontSize: "14px",
@@ -369,7 +370,7 @@ export default function WorkspaceView({ onSelectProject }: WorkspaceViewProps) {
                 style={{
                   padding: "8px 12px",
                   backgroundColor: "transparent",
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   border: "none",
                   borderRadius: "6px",
                   fontSize: "14px",
@@ -404,6 +405,8 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
   onViewFiles: () => void;
   onSelectForChat: () => void;
 }) {
+  const { theme } = useTheme();
+  
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -418,8 +421,8 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
 
   return (
     <div style={{
-      backgroundColor: currentTheme.colors.surface,
-      border: `1px solid ${currentTheme.colors.grayLight}`,
+      backgroundColor: theme.colors.surface,
+      border: `1px solid ${theme.colors.grayLight}`,
       borderRadius: "12px",
       padding: "24px",
       transition: "all 0.2s",
@@ -428,11 +431,11 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
     }}
     onMouseEnter={(e) => {
       e.currentTarget.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
-      e.currentTarget.style.borderColor = currentTheme.colors.primary;
+      e.currentTarget.style.borderColor = theme.colors.primary;
     }}
     onMouseLeave={(e) => {
       e.currentTarget.style.boxShadow = "none";
-      e.currentTarget.style.borderColor = currentTheme.colors.grayLight;
+      e.currentTarget.style.borderColor = theme.colors.grayLight;
     }}>
       <div style={{
         display: "flex",
@@ -444,7 +447,7 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
           <h3 style={{
             fontSize: "18px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: "0 0 8px 0",
           }}>
             {project.name}
@@ -452,7 +455,7 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
           {project.description && (
             <p style={{
               fontSize: "13px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               margin: "0 0 8px 0",
               lineHeight: "1.4"
             }}>
@@ -461,7 +464,7 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
           )}
           <p style={{
             fontSize: "12px",
-            color: currentTheme.colors.textLight,
+            color: theme.colors.textLight,
             margin: 0,
           }}>
             Updated {formatDate(project.updated_at || project.created_at)}
@@ -470,8 +473,8 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
 
         <div style={{
           padding: "4px 12px",
-          backgroundColor: `${currentTheme.colors.primary}20`,
-          color: currentTheme.colors.primary,
+          backgroundColor: `${theme.colors.primary}20`,
+          color: theme.colors.primary,
           borderRadius: "12px",
           fontSize: "12px",
           fontWeight: "500",
@@ -495,7 +498,7 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
           style={{
             flex: 1,
             padding: "10px 16px",
-            backgroundColor: currentTheme.colors.primary,
+            backgroundColor: theme.colors.primary,
             color: "white",
             border: "none",
             borderRadius: "6px",
@@ -509,10 +512,10 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
             gap: "6px"
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover || '#6d28d9';
+            e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover || '#6d28d9';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = currentTheme.colors.primary;
+            e.currentTarget.style.backgroundColor = theme.colors.primary;
           }}
         >
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -531,8 +534,8 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
           style={{
             padding: "10px 16px",
             backgroundColor: "transparent",
-            color: currentTheme.colors.primary,
-            border: `1px solid ${currentTheme.colors.primary}`,
+            color: theme.colors.primary,
+            border: `1px solid ${theme.colors.primary}`,
             borderRadius: "6px",
             fontSize: "14px",
             fontWeight: "500",
@@ -543,7 +546,7 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
             justifyContent: "center",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = `${currentTheme.colors.primary}10`;
+            e.currentTarget.style.backgroundColor = `${theme.colors.primary}10`;
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.backgroundColor = "transparent";
@@ -560,26 +563,29 @@ function ProjectCard({ project, onViewFiles, onSelectForChat }: {
 }
 
 // Icons
-const SearchIcon = () => (
-  <svg
-    style={{
-      position: "absolute",
-      left: "16px",
-      top: "50%",
-      transform: "translateY(-50%)",
-      width: "16px",
-      height: "16px",
-      color: currentTheme.colors.textMedium,
-    }}
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    viewBox="0 0 24 24"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.35-4.35" />
-  </svg>
-);
+function SearchIcon() {
+  const { theme } = useTheme();
+  return (
+    <svg
+      style={{
+        position: "absolute",
+        left: "16px",
+        top: "50%",
+        transform: "translateY(-50%)",
+        width: "16px",
+        height: "16px",
+        color: theme.colors.textMedium,
+      }}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+    >
+      <circle cx="11" cy="11" r="8" />
+      <path d="m21 21-4.35-4.35" />
+    </svg>
+  );
+}
 
 const PlusIcon = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

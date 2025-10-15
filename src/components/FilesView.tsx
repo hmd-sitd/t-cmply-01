@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import FileTable from './FileTable';
 import DeleteModal from './DeleteModal';
 import NotificationPopup from './NotificationPopup';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import type { Document, UploadState } from '../types';
 
 interface FilesViewProps {
@@ -28,6 +28,7 @@ export default function FilesView({
   isLoading,
   isAdmin
 }: FilesViewProps) {
+  const { theme } = useTheme();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeFileTab, setActiveFileTab] = useState<"all" | "recent" | "shared">("all");
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -73,7 +74,7 @@ export default function FilesView({
           style={{
             fontSize: "28px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: "0",
           }}
         >
@@ -97,24 +98,24 @@ export default function FilesView({
               disabled={isLoading}
               style={{
                 padding: "8px 40px 8px 16px",
-                border: `1px solid ${currentTheme.colors.inputBorder}`,
+                border: `1px solid ${theme.colors.inputBorder}`,
                 borderRadius: "8px",
                 fontSize: "14px",
                 width: "250px",
                 outline: "none",
-                backgroundColor: isLoading ? currentTheme.colors.backgroundAlt : currentTheme.colors.inputBackground,
-                color: currentTheme.colors.textDark,
+                backgroundColor: isLoading ? theme.colors.backgroundAlt : theme.colors.inputBackground,
+                color: theme.colors.textDark,
                 transition: "border-color 0.2s, box-shadow 0.2s",
                 opacity: isLoading ? 0.6 : 1,
               }}
               onFocus={(e) => {
                 if (!isLoading) {
-                  e.target.style.borderColor = currentTheme.colors.inputBorderFocus;
-                  e.target.style.boxShadow = `0 0 0 3px ${currentTheme.colors.primary}20`;
+                  e.target.style.borderColor = theme.colors.inputBorderFocus;
+                  e.target.style.boxShadow = `0 0 0 3px ${theme.colors.primary}20`;
                 }
               }}
               onBlur={(e) => {
-                e.target.style.borderColor = currentTheme.colors.inputBorder;
+                e.target.style.borderColor = theme.colors.inputBorder;
                 e.target.style.boxShadow = "none";
               }}
             />
@@ -126,7 +127,7 @@ export default function FilesView({
                 transform: "translateY(-50%)",
                 width: "16px",
                 height: "16px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}
               fill="none"
               stroke="currentColor"
@@ -142,7 +143,7 @@ export default function FilesView({
             <label
               style={{
                 padding: "8px 16px",
-                backgroundColor: isBackendConnected && !isLoading ? currentTheme.colors.buttonPrimary : currentTheme.colors.textLight,
+                backgroundColor: isBackendConnected && !isLoading ? theme.colors.buttonPrimary : theme.colors.textLight,
                 color: "white",
                 border: "none",
                 borderRadius: "8px",
@@ -157,13 +158,13 @@ export default function FilesView({
               }}
               onMouseEnter={(e) => {
                 if (isBackendConnected && !isLoading) {
-                  e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+                  e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover;
                   e.currentTarget.style.transform = "translateY(-1px)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (isBackendConnected && !isLoading) {
-                  e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimary;
+                  e.currentTarget.style.backgroundColor = theme.colors.buttonPrimary;
                   e.currentTarget.style.transform = "translateY(0)";
                 }
               }}
@@ -177,7 +178,7 @@ export default function FilesView({
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  color: currentTheme.colors.buttonPrimary,
+                  color: theme.colors.buttonPrimary,
                   fontSize: "12px",
                   fontWeight: "bold",
                 }}
@@ -203,7 +204,7 @@ export default function FilesView({
           display: "flex",
           gap: "32px",
           marginBottom: "24px",
-          borderBottom: `1px solid ${currentTheme.colors.bagr}`,
+          borderBottom: `1px solid ${theme.colors.bagr}`,
         }}
       >
         {(["all", "recent", "shared"] as const).map((tab) => (
@@ -217,21 +218,21 @@ export default function FilesView({
               backgroundColor: "transparent",
               fontSize: "14px",
               fontWeight: "500",
-              color: activeFileTab === tab ? currentTheme.colors.primary : currentTheme.colors.textMedium,
+              color: activeFileTab === tab ? theme.colors.primary : theme.colors.textMedium,
               cursor: isLoading ? "not-allowed" : "pointer",
-              borderBottom: activeFileTab === tab ? `2px solid ${currentTheme.colors.primary}` : "2px solid transparent",
+              borderBottom: activeFileTab === tab ? `2px solid ${theme.colors.primary}` : "2px solid transparent",
               textTransform: "capitalize",
               transition: "color 0.2s",
               opacity: isLoading ? 0.6 : 1,
             }}
             onMouseEnter={(e) => {
               if (activeFileTab !== tab && !isLoading) {
-                e.currentTarget.style.color = currentTheme.colors.textDark;
+                e.currentTarget.style.color = theme.colors.textDark;
               }
             }}
             onMouseLeave={(e) => {
               if (activeFileTab !== tab && !isLoading) {
-                e.currentTarget.style.color = currentTheme.colors.textMedium;
+                e.currentTarget.style.color = theme.colors.textMedium;
               }
             }}
           >
@@ -249,17 +250,17 @@ export default function FilesView({
             alignItems: "center",
             justifyContent: "center",
             padding: "60px 20px",
-            backgroundColor: currentTheme.colors.surface,
+            backgroundColor: theme.colors.surface,
             borderRadius: "8px",
-            border: `1px solid ${currentTheme.colors.bagr}`,
+            border: `1px solid ${theme.colors.bagr}`,
           }}
         >
           <div
             style={{
               width: "40px",
               height: "40px",
-              border: `4px solid ${currentTheme.colors.grayLight}`,
-              borderTop: `4px solid ${currentTheme.colors.primary}`,
+              border: `4px solid ${theme.colors.grayLight}`,
+              borderTop: `4px solid ${theme.colors.primary}`,
               borderRadius: "50%",
               animation: "spin 1s linear infinite",
               marginBottom: "16px",
@@ -268,7 +269,7 @@ export default function FilesView({
           <div
             style={{
               fontSize: "16px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               fontWeight: "500",
             }}
           >
@@ -277,7 +278,7 @@ export default function FilesView({
           <div
             style={{
               fontSize: "14px",
-              color: currentTheme.colors.textLight,
+              color: theme.colors.textLight,
               marginTop: "8px",
             }}
           >
@@ -309,14 +310,14 @@ export default function FilesView({
             justifyContent: "space-between",
             alignItems: "center",
             padding: "16px 24px",
-            backgroundColor: currentTheme.colors.backgroundAlt,
-            borderTop: `1px solid ${currentTheme.colors.grayLight}`,
+            backgroundColor: theme.colors.backgroundAlt,
+            borderTop: `1px solid ${theme.colors.grayLight}`,
           }}
         >
           <div
             style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}
           >
             Showing {filteredDocuments.length} of {documents.length} files
@@ -327,10 +328,10 @@ export default function FilesView({
             disabled={isLoading}
             style={{
               padding: "6px 12px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "6px",
-              backgroundColor: currentTheme.colors.surface,
-              color: currentTheme.colors.textMedium,
+              backgroundColor: theme.colors.surface,
+              color: theme.colors.textMedium,
               fontSize: "12px",
               cursor: isLoading ? "not-allowed" : "pointer",
               transition: "all 0.2s",
@@ -338,16 +339,16 @@ export default function FilesView({
             }}
             onMouseEnter={(e) => {
               if (!isLoading) {
-                e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
-                e.currentTarget.style.borderColor = currentTheme.colors.inputBorderFocus;
-                e.currentTarget.style.color = currentTheme.colors.textDark;
+                e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
+                e.currentTarget.style.borderColor = theme.colors.inputBorderFocus;
+                e.currentTarget.style.color = theme.colors.textDark;
               }
             }}
             onMouseLeave={(e) => {
               if (!isLoading) {
-                e.currentTarget.style.backgroundColor = currentTheme.colors.surface;
-                e.currentTarget.style.borderColor = currentTheme.colors.inputBorder;
-                e.currentTarget.style.color = currentTheme.colors.textMedium;
+                e.currentTarget.style.backgroundColor = theme.colors.surface;
+                e.currentTarget.style.borderColor = theme.colors.inputBorder;
+                e.currentTarget.style.color = theme.colors.textMedium;
               }
             }}
           >

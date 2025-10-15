@@ -5,7 +5,7 @@ import React, { useRef, useEffect, useMemo, useState } from 'react';
 import ChatInput from './ChatInput';
 import SelectSourcesModal from './modals/SelectSourcesModal';
 import type { ChatMessage, ChatSettings } from '../types';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 
 interface Project {
   id: string;
@@ -37,6 +37,7 @@ export default function ChatView({
   selectedProject,
   onSelectProject
 }: ChatViewProps) {
+  const { theme } = useTheme();
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const [showSourcesModal, setShowSourcesModal] = useState(false);
 
@@ -172,8 +173,8 @@ export default function ChatView({
       {/* Chat Header with Sources */}
       <div style={{
         padding: "16px 40px",
-        borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
-        backgroundColor: currentTheme.colors.surface,
+        borderBottom: `1px solid ${theme.colors.grayLight}`,
+        backgroundColor: theme.colors.surface,
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center"
@@ -182,7 +183,7 @@ export default function ChatView({
           <h2 style={{
             fontSize: "20px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: 0
           }}>
             AI Assistant
@@ -190,7 +191,7 @@ export default function ChatView({
           {selectedProject && (
             <p style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               margin: "4px 0 0 0"
             }}>
               Context: {selectedProject.name}
@@ -207,9 +208,9 @@ export default function ChatView({
               alignItems: 'center',
               gap: '8px',
               padding: '8px 16px',
-              backgroundColor: selectedProject ? currentTheme.colors.primary : currentTheme.colors.backgroundAlt,
-              color: selectedProject ? 'white' : currentTheme.colors.textDark,
-              border: selectedProject ? 'none' : `1px solid ${currentTheme.colors.grayLight}`,
+              backgroundColor: selectedProject ? theme.colors.primary : theme.colors.backgroundAlt,
+              color: selectedProject ? 'white' : theme.colors.textDark,
+              border: selectedProject ? 'none' : `1px solid ${theme.colors.grayLight}`,
               borderRadius: '8px',
               fontSize: '14px',
               fontWeight: '500',
@@ -230,8 +231,8 @@ export default function ChatView({
               style={{
                 padding: '8px',
                 backgroundColor: 'transparent',
-                color: currentTheme.colors.textMedium,
-                border: `1px solid ${currentTheme.colors.grayLight}`,
+                color: theme.colors.textMedium,
+                border: `1px solid ${theme.colors.grayLight}`,
                 borderRadius: '8px',
                 cursor: 'pointer',
                 transition: 'all 0.2s'
@@ -274,7 +275,7 @@ export default function ChatView({
               style={{
                 fontSize: "32px",
                 fontWeight: "600",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 margin: "0 0 8px 0",
               }}
             >
@@ -284,7 +285,7 @@ export default function ChatView({
               style={{
                 fontSize: "32px",
                 fontWeight: "600",
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 margin: "0 0 16px 0",
               }}
             >
@@ -301,7 +302,7 @@ export default function ChatView({
                 <p
                   style={{
                     fontSize: "16px",
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     maxWidth: "600px",
                     lineHeight: "1.6",
                     marginBottom: "8px"
@@ -319,7 +320,7 @@ export default function ChatView({
                     onClick={openSourcesModal}
                     style={{
                       padding: '12px 24px',
-                      backgroundColor: currentTheme.colors.primary,
+                      backgroundColor: theme.colors.primary,
                       color: 'white',
                       border: 'none',
                       borderRadius: '8px',
@@ -342,14 +343,14 @@ export default function ChatView({
             ) : (
               <div style={{
                 padding: '16px 24px',
-                backgroundColor: currentTheme.colors.backgroundAlt,
+                backgroundColor: theme.colors.backgroundAlt,
                 borderRadius: '12px',
-                border: `1px solid ${currentTheme.colors.grayLight}`,
+                border: `1px solid ${theme.colors.grayLight}`,
                 maxWidth: '600px'
               }}>
                 <p style={{
                   fontSize: '16px',
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                   margin: '0 0 8px 0',
                   fontWeight: '500'
                 }}>
@@ -357,7 +358,7 @@ export default function ChatView({
                 </p>
                 <p style={{
                   fontSize: '14px',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   margin: 0,
                   lineHeight: '1.5'
                 }}>
@@ -372,14 +373,14 @@ export default function ChatView({
             {selectedProject && sortedChatMessages.length > 0 && (
               <div style={{
                 padding: '12px 16px',
-                backgroundColor: currentTheme.colors.backgroundAlt,
+                backgroundColor: theme.colors.backgroundAlt,
                 borderRadius: '8px',
-                border: `1px solid ${currentTheme.colors.grayLight}`,
+                border: `1px solid ${theme.colors.grayLight}`,
                 marginTop: '20px'
               }}>
                 <div style={{
                   fontSize: '13px',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   display: 'flex',
                   alignItems: 'center',
                   gap: '8px'
@@ -409,9 +410,9 @@ export default function ChatView({
                     maxWidth: "85%",
                     padding: "16px 20px",
                     borderRadius: "16px",
-                    backgroundColor: isUserMessage(chatMessage.role) ? currentTheme.colors.primary : currentTheme.colors.backgroundAlt,
-                    color: isUserMessage(chatMessage.role) ? "white" : currentTheme.colors.textDark,
-                    border: isUserMessage(chatMessage.role) ? "none" : `1px solid ${currentTheme.colors.grayLight}`,
+                    backgroundColor: isUserMessage(chatMessage.role) ? theme.colors.primary : theme.colors.backgroundAlt,
+                    color: isUserMessage(chatMessage.role) ? "white" : theme.colors.textDark,
+                    border: isUserMessage(chatMessage.role) ? "none" : `1px solid ${theme.colors.grayLight}`,
                   }}
                 >
                   <div
@@ -447,7 +448,7 @@ export default function ChatView({
                 <div
                   style={{
                     fontSize: "12px",
-                    color: currentTheme.colors.textLight,
+                    color: theme.colors.textLight,
                     marginTop: "4px",
                     marginBottom: "8px",
                   }}

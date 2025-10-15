@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { currentTheme } from '../config/themes';
+import { currentTheme } from '../config/themes';  // Class components can't use hooks
 
 interface Props {
   children: React.ReactNode;
@@ -13,6 +13,8 @@ interface State {
   error?: Error;
 }
 
+// Note: Using currentTheme (static) because ErrorBoundary is a Class Component
+// Class components cannot use hooks like useTheme()
 export default class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import { useAdminPermissions } from '../hooks/useAdminPermissions';
 import { useAdminStats } from '../hooks/useAdminStats';
 import { apiService } from '../services/api';
@@ -18,6 +18,7 @@ interface AdminViewProps {
 }
 
 export default function AdminView({ onExitAdmin }: AdminViewProps) {
+  const { theme } = useTheme();
   const [activeTab, setActiveTab] = useState("dashboard");
   const [error, setError] = useState<string | null>(null);
   const [userType, setUserType] = useState<string>("");
@@ -82,21 +83,21 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
             <div style={{
               textAlign: "center",
               padding: "60px 20px",
-              backgroundColor: currentTheme.colors.surface,
+              backgroundColor: theme.colors.surface,
               borderRadius: "8px",
-              border: `1px solid ${currentTheme.colors.grayLight}`,
+              border: `1px solid ${theme.colors.grayLight}`,
             }}>
               <div style={{
                 fontSize: "18px",
                 fontWeight: "500",
-                color: currentTheme.colors.error,
+                color: theme.colors.error,
                 marginBottom: "8px",
               }}>
                 Access Denied
               </div>
               <div style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}>
                 Only Super Administrators can manage roles and permissions
               </div>
@@ -138,12 +139,12 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
           <div style={{
             width: "40px",
             height: "40px",
-            border: `4px solid ${currentTheme.colors.grayLight}`,
-            borderTop: `4px solid ${currentTheme.colors.primary}`,
+            border: `4px solid ${theme.colors.grayLight}`,
+            borderTop: `4px solid ${theme.colors.primary}`,
             borderRadius: "50%",
             animation: "spin 1s linear infinite",
           }} />
-          <span style={{ color: currentTheme.colors.textMedium }}>
+          <span style={{ color: theme.colors.textMedium }}>
             Loading admin panel...
           </span>
         </div>
@@ -169,32 +170,32 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
         padding: "20px"
       }}>
         <div style={{
-          backgroundColor: currentTheme.colors.surface,
+          backgroundColor: theme.colors.surface,
           borderRadius: "12px",
           padding: "40px",
           textAlign: "center",
           maxWidth: "500px",
-          border: `1px solid ${currentTheme.colors.grayLight}`,
+          border: `1px solid ${theme.colors.grayLight}`,
           boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
         }}>
           <div style={{
             width: "80px",
             height: "80px",
-            backgroundColor: `${currentTheme.colors.error}20`,
+            backgroundColor: `${theme.colors.error}20`,
             borderRadius: "50%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             margin: "0 auto 24px",
           }}>
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={currentTheme.colors.error} strokeWidth="2">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke={theme.colors.error} strokeWidth="2">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               <path d="M12 8v4"/>
               <path d="M12 16h.01"/>
             </svg>
           </div>
           <h2 style={{ 
-            color: currentTheme.colors.textDark, 
+            color: theme.colors.textDark, 
             marginBottom: "16px",
             fontSize: "24px",
             fontWeight: "600"
@@ -202,7 +203,7 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
             Access Denied
           </h2>
           <p style={{ 
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             marginBottom: "24px",
             fontSize: "16px",
             lineHeight: "1.5"
@@ -213,7 +214,7 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
             onClick={onExitAdmin}
             style={{
               padding: "12px 24px",
-              backgroundColor: currentTheme.colors.primary,
+              backgroundColor: theme.colors.primary,
               color: "white",
               border: "none",
               borderRadius: "8px",
@@ -223,10 +224,10 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
               transition: "all 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.primaryDark;
+              e.currentTarget.style.backgroundColor = theme.colors.primaryDark;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.primary;
+              e.currentTarget.style.backgroundColor = theme.colors.primary;
             }}
           >
             Return to Chat
@@ -241,8 +242,8 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
       {/* Sidebar */}
       <div style={{
         width: "256px",
-        backgroundColor: currentTheme.colors.surface,
-        borderRight: `1px solid ${currentTheme.colors.grayLight}`,
+        backgroundColor: theme.colors.surface,
+        borderRight: `1px solid ${theme.colors.grayLight}`,
         display: "flex",
         flexDirection: "column",
         boxShadow: "0 1px 3px rgba(0, 0, 0, 0.1)",
@@ -253,10 +254,10 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
         <div style={{ padding: "24px" }}>
           {/* Logo */}
           <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "32px" }}>
-            {currentTheme.logo.loginImageUrl ? (
+            {theme.logo.loginImageUrl ? (
               <img 
-                src={currentTheme.logo.loginImageUrl}
-                alt={`${currentTheme.companyName} Logo`}
+                src={theme.logo.loginImageUrl}
+                alt={`${theme.companyName} Logo`}
                 style={{
                   height: "32px",
                   maxWidth: "140px",
@@ -265,14 +266,14 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
               />
             ) : (
               <div style={{ fontSize: "20px", fontWeight: "bold" }}>
-                <span style={{ color: currentTheme.colors.primary }}>{currentTheme.logo.text}</span>
-                <span style={{ color: currentTheme.colors.textDark, marginLeft: "4px" }}>{currentTheme.logo.subText}</span>
+                <span style={{ color: theme.colors.primary }}>{theme.logo.text}</span>
+                <span style={{ color: theme.colors.textDark, marginLeft: "4px" }}>{theme.logo.subText}</span>
               </div>
             )}
           </div>
           
           <div style={{ 
-            color: currentTheme.colors.primary, 
+            color: theme.colors.primary, 
             fontWeight: "600", 
             marginBottom: "32px",
             fontSize: "16px"
@@ -296,8 +297,8 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
                     alignItems: "center",
                     gap: "12px",
                     padding: "12px 16px",
-                    backgroundColor: isActive ? currentTheme.colors.primary : "transparent",
-                    color: isActive ? "white" : item.disabled ? currentTheme.colors.textLight : currentTheme.colors.textMedium,
+                    backgroundColor: isActive ? theme.colors.primary : "transparent",
+                    color: isActive ? "white" : item.disabled ? theme.colors.textLight : theme.colors.textMedium,
                     border: "none",
                     borderRadius: "8px",
                     fontSize: "14px",
@@ -310,14 +311,14 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
                   }}
                   onMouseEnter={(e) => {
                     if (!isActive && !item.disabled) {
-                      e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
-                      e.currentTarget.style.color = currentTheme.colors.textDark;
+                      e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
+                      e.currentTarget.style.color = theme.colors.textDark;
                     }
                   }}
                   onMouseLeave={(e) => {
                     if (!isActive && !item.disabled) {
                       e.currentTarget.style.backgroundColor = "transparent";
-                      e.currentTarget.style.color = currentTheme.colors.textMedium;
+                      e.currentTarget.style.color = theme.colors.textMedium;
                     }
                   }}
                 >
@@ -339,7 +340,7 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
               gap: "12px",
               padding: "12px 16px",
               backgroundColor: "transparent",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               border: "none",
               borderRadius: "8px",
               fontSize: "14px",
@@ -350,12 +351,12 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
               width: "100%",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
-              e.currentTarget.style.color = currentTheme.colors.textDark;
+              e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
+              e.currentTarget.style.color = theme.colors.textDark;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = "transparent";
-              e.currentTarget.style.color = currentTheme.colors.textMedium;
+              e.currentTarget.style.color = theme.colors.textMedium;
             }}
           >
             <LogOutIcon />
@@ -376,12 +377,12 @@ export default function AdminView({ onExitAdmin }: AdminViewProps) {
         {error && (
           <div style={{
             padding: "12px 16px",
-            backgroundColor: `${currentTheme.colors.error}20`,
-            border: `1px solid ${currentTheme.colors.error}`,
+            backgroundColor: `${theme.colors.error}20`,
+            border: `1px solid ${theme.colors.error}`,
             borderRadius: "8px",
             marginBottom: "24px",
             fontSize: "14px",
-            color: currentTheme.colors.error,
+            color: theme.colors.error,
             display: "flex",
             alignItems: "center",
             gap: "8px",

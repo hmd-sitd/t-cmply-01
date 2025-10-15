@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 
 interface User {
@@ -24,6 +24,7 @@ interface CreateProjectModalProps {
 }
 
 export default function CreateProjectModal({ onClose, onSuccess }: CreateProjectModalProps) {
+  const { theme } = useTheme();
   const [projectName, setProjectName] = useState("");
   const [projectSlug, setProjectSlug] = useState("");
   const [description, setDescription] = useState("");
@@ -164,7 +165,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
         left: 0,
         right: 0,
         bottom: 0,
-        backgroundColor: currentTheme.colors.modalOverlay,
+        backgroundColor: theme.colors.modalOverlay,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -175,7 +176,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
     >
       <div
         style={{
-          backgroundColor: currentTheme.colors.modalBackground,
+          backgroundColor: theme.colors.modalBackground,
           borderRadius: "12px",
           padding: "32px",
           maxWidth: "700px",
@@ -196,7 +197,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
           <h2 style={{
             fontSize: "24px",
             fontWeight: "600",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             margin: 0,
           }}>
             Create New Project
@@ -207,7 +208,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
               background: "none",
               border: "none",
               fontSize: "24px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               cursor: "pointer",
               padding: "0",
               width: "32px",
@@ -226,10 +227,10 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
           <div style={{
             padding: "12px 16px",
             backgroundColor: "#FEE",
-            border: `1px solid ${currentTheme.colors.error}`,
+            border: `1px solid ${theme.colors.error}`,
             borderRadius: "8px",
             marginBottom: "20px",
-            color: currentTheme.colors.error,
+            color: theme.colors.error,
             fontSize: "14px",
           }}>
             {error}
@@ -242,7 +243,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             display: "block",
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "8px",
           }}>
             Project Name *
@@ -255,12 +256,12 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             style={{
               width: "100%",
               padding: "12px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
               backgroundColor: "#FFFFFF",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               boxSizing: "border-box",
             }}
           />
@@ -272,7 +273,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             display: "block",
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "8px",
           }}>
             Project Slug *
@@ -285,18 +286,18 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             style={{
               width: "100%",
               padding: "12px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
               backgroundColor: "#FFFFFF",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               boxSizing: "border-box",
             }}
           />
           <p style={{
             fontSize: "12px",
-            color: currentTheme.colors.textLight,
+            color: theme.colors.textLight,
             marginTop: "4px",
           }}>
             Auto-generated from project name. Use lowercase letters, numbers, and hyphens.
@@ -309,7 +310,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             display: "block",
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "8px",
           }}>
             Description (Optional)
@@ -322,12 +323,12 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             style={{
               width: "100%",
               padding: "12px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
               backgroundColor: "#FFFFFF",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               resize: "vertical",
               fontFamily: "inherit",
               boxSizing: "border-box",
@@ -340,7 +341,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
           <label style={{
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: "12px",
             display: "block",
           }}>
@@ -352,7 +353,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             <div style={{
               backgroundColor: "#FFFFFF",
               borderRadius: "8px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               overflow: "hidden",
               marginBottom: "16px",
             }}>
@@ -365,7 +366,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
                     key={user.id}
                     style={{
                       padding: "12px 16px",
-                      borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+                      borderBottom: `1px solid ${theme.colors.grayLight}`,
                       display: "flex",
                       alignItems: "center",
                       gap: "12px",
@@ -387,12 +388,12 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
                           width: "16px",
                           height: "16px",
                           cursor: "pointer",
-                          accentColor: currentTheme.colors.primary,
+                          accentColor: theme.colors.primary,
                         }}
                       />
                       <span style={{
                         fontSize: "14px",
-                        color: currentTheme.colors.textDark,
+                        color: theme.colors.textDark,
                         fontWeight: "500",
                       }}>
                         {user.email}
@@ -409,7 +410,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
                           gap: "6px",
                           cursor: "pointer",
                           fontSize: "13px",
-                          color: currentTheme.colors.textMedium,
+                          color: theme.colors.textMedium,
                         }}>
                           <input
                             type="checkbox"
@@ -419,7 +420,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
                               width: "14px",
                               height: "14px",
                               cursor: "pointer",
-                              accentColor: currentTheme.colors.primary,
+                              accentColor: theme.colors.primary,
                             }}
                           />
                           Upload Documents
@@ -436,11 +437,11 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
                           }}
                           style={{
                             padding: "4px 8px",
-                            border: `1px solid ${currentTheme.colors.inputBorder}`,
+                            border: `1px solid ${theme.colors.inputBorder}`,
                             borderRadius: "4px",
                             fontSize: "12px",
                             backgroundColor: "#FFFFFF",
-                            color: currentTheme.colors.textDark,
+                            color: theme.colors.textDark,
                             cursor: "pointer",
                           }}
                         >
@@ -457,10 +458,10 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             <div style={{
               padding: "24px",
               textAlign: "center",
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: "8px",
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}>
               No users available in your organization. Contact your administrator to add users.
             </div>
@@ -470,10 +471,10 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
           {selectedMembers.length > 0 && (
             <div style={{
               padding: "12px 16px",
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: "6px",
               fontSize: "13px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}>
               <strong>{selectedMembers.length}</strong> member{selectedMembers.length !== 1 ? 's' : ''} selected
               {selectedMembers.filter(m => m.canUploadFiles).length > 0 && (
@@ -489,7 +490,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
           gap: "12px",
           justifyContent: "flex-end",
           paddingTop: "24px",
-          borderTop: `1px solid ${currentTheme.colors.grayLight}`,
+          borderTop: `1px solid ${theme.colors.grayLight}`,
         }}>
           <button
             onClick={onClose}
@@ -497,8 +498,8 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             style={{
               padding: "12px 24px",
               backgroundColor: "transparent",
-              color: currentTheme.colors.textMedium,
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              color: theme.colors.textMedium,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               fontWeight: "500",
@@ -513,7 +514,7 @@ export default function CreateProjectModal({ onClose, onSuccess }: CreateProject
             disabled={isLoading || !projectName.trim() || !projectSlug.trim()}
             style={{
               padding: "12px 24px",
-              backgroundColor: currentTheme.colors.buttonPrimary,
+              backgroundColor: theme.colors.buttonPrimary,
               color: "white",
               border: "none",
               borderRadius: "8px",

@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 import ProjectMembersModal from '../modals/ProjectMembersModal';
 import FileUploadWithProcessing from '../FileUploadWithProcessing';
@@ -66,6 +66,7 @@ interface Client {
 }
 
 export default function ProjectsTab({ onError }: ProjectsTabProps) {
+  const { theme } = useTheme();
   const { showNotification, NotificationContainer } = useNotification();
   
   // Main states
@@ -277,8 +278,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
 
   const ProjectCard = ({ project }: { project: Project }) => (
     <div style={{
-      backgroundColor: currentTheme.colors.surface,
-      border: `1px solid ${currentTheme.colors.inputBorder}`,
+      backgroundColor: theme.colors.surface,
+      border: `1px solid ${theme.colors.inputBorder}`,
       borderRadius: '12px',
       padding: '20px',
       position: 'relative',
@@ -300,7 +301,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
         <h3 style={{
           fontSize: '18px',
           fontWeight: '600',
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           margin: 0,
           maxWidth: '60%',
           overflow: 'hidden',
@@ -318,7 +319,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
             title="Upload files"
             style={{
               padding: '6px 12px',
-              backgroundColor: currentTheme.colors.primary,
+              backgroundColor: theme.colors.primary,
               color: 'white',
               border: 'none',
               borderRadius: '6px',
@@ -343,8 +344,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
             style={{
               padding: '6px 12px',
               backgroundColor: 'transparent',
-              color: currentTheme.colors.primary,
-              border: `1px solid ${currentTheme.colors.primary}`,
+              color: theme.colors.primary,
+              border: `1px solid ${theme.colors.primary}`,
               borderRadius: '6px',
               fontSize: '12px',
               fontWeight: '500',
@@ -352,7 +353,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               transition: 'background-color 0.2s',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.primaryLight;
+              e.currentTarget.style.backgroundColor = theme.colors.primaryLight;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = 'transparent';
@@ -368,8 +369,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
             style={{
               padding: '6px 12px',
               backgroundColor: 'transparent',
-              color: currentTheme.colors.textMedium,
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              color: theme.colors.textMedium,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: '6px',
               fontSize: '12px',
               fontWeight: '500',
@@ -377,10 +378,10 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               transition: 'border-color 0.2s',
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = currentTheme.colors.textMedium;
+              e.currentTarget.style.borderColor = theme.colors.textMedium;
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = currentTheme.colors.inputBorder;
+              e.currentTarget.style.borderColor = theme.colors.inputBorder;
             }}
           >
             👥 Members ({project.memberCount || 0})
@@ -394,8 +395,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               style={{
                 padding: '6px 12px',
                 backgroundColor: 'transparent',
-                color: currentTheme.colors.error,
-                border: `1px solid ${currentTheme.colors.error}`,
+                color: theme.colors.error,
+                border: `1px solid ${theme.colors.error}`,
                 borderRadius: '6px',
                 fontSize: '12px',
                 fontWeight: '500',
@@ -419,7 +420,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
       {project.description && (
         <p style={{
           fontSize: '14px',
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
           marginBottom: '12px',
           lineHeight: '1.5',
           maxHeight: '42px',
@@ -435,8 +436,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
         display: 'flex',
         gap: '16px',
         fontSize: '12px',
-        color: currentTheme.colors.textLight,
-        borderTop: `1px solid ${currentTheme.colors.grayLight}`,
+        color: theme.colors.textLight,
+        borderTop: `1px solid ${theme.colors.grayLight}`,
         paddingTop: '12px',
         marginTop: '12px',
       }}>
@@ -464,7 +465,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
         <h2 style={{
           fontSize: '24px',
           fontWeight: '600',
-          color: currentTheme.colors.textDark
+          color: theme.colors.textDark
         }}>
           Projects
         </h2>
@@ -472,7 +473,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
         <button
           onClick={() => setShowCreateModal(true)}
           style={{
-            backgroundColor: currentTheme.colors.buttonPrimary,
+            backgroundColor: theme.colors.buttonPrimary,
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -505,7 +506,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
             flex: 1,
             padding: '10px 16px',
             borderRadius: '8px',
-            border: `1px solid ${currentTheme.colors.inputBorder}`,
+            border: `1px solid ${theme.colors.inputBorder}`,
             backgroundColor: 'white',
             fontSize: '14px'
           }}
@@ -518,7 +519,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
             style={{
               padding: '10px 16px',
               borderRadius: '8px',
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               backgroundColor: 'white',
               fontSize: '14px',
               minWidth: '200px'
@@ -542,7 +543,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
           alignItems: 'center',
           height: '200px',
           fontSize: '16px',
-          color: currentTheme.colors.textMedium
+          color: theme.colors.textMedium
         }}>
           Loading projects...
         </div>
@@ -550,8 +551,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
         <div style={{
           textAlign: 'center',
           padding: '60px 20px',
-          color: currentTheme.colors.textMedium,
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          color: theme.colors.textMedium,
+          backgroundColor: theme.colors.backgroundAlt,
           borderRadius: '12px'
         }}>
           <div style={{ fontSize: '48px', marginBottom: '16px' }}>📁</div>
@@ -591,9 +592,9 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                 disabled={currentPage === 1}
                 style={{
                   padding: '8px 12px',
-                  backgroundColor: currentPage === 1 ? currentTheme.colors.grayLight : 'white',
-                  color: currentPage === 1 ? currentTheme.colors.textLight : currentTheme.colors.textDark,
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  backgroundColor: currentPage === 1 ? theme.colors.grayLight : 'white',
+                  color: currentPage === 1 ? theme.colors.textLight : theme.colors.textDark,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: '6px',
                   cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
                   fontSize: '14px'
@@ -612,9 +613,9 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                     onClick={() => setCurrentPage(page)}
                     style={{
                       padding: '8px 12px',
-                      backgroundColor: currentPage === page ? currentTheme.colors.primary : 'white',
-                      color: currentPage === page ? 'white' : currentTheme.colors.textDark,
-                      border: `1px solid ${currentPage === page ? currentTheme.colors.primary : currentTheme.colors.inputBorder}`,
+                      backgroundColor: currentPage === page ? theme.colors.primary : 'white',
+                      color: currentPage === page ? 'white' : theme.colors.textDark,
+                      border: `1px solid ${currentPage === page ? theme.colors.primary : theme.colors.inputBorder}`,
                       borderRadius: '6px',
                       cursor: 'pointer',
                       fontSize: '14px',
@@ -631,9 +632,9 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                 disabled={currentPage === totalPages}
                 style={{
                   padding: '8px 12px',
-                  backgroundColor: currentPage === totalPages ? currentTheme.colors.grayLight : 'white',
-                  color: currentPage === totalPages ? currentTheme.colors.textLight : currentTheme.colors.textDark,
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  backgroundColor: currentPage === totalPages ? theme.colors.grayLight : 'white',
+                  color: currentPage === totalPages ? theme.colors.textLight : theme.colors.textDark,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: '6px',
                   cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
                   fontSize: '14px'
@@ -670,7 +671,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
             <h3 style={{
               fontSize: '20px',
               fontWeight: '600',
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               marginBottom: '24px'
             }}>
               Create New Project
@@ -682,7 +683,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                   display: 'block',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                   marginBottom: '8px'
                 }}>
                   Organization
@@ -694,7 +695,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                     width: '100%',
                     padding: '10px',
                     borderRadius: '8px',
-                    border: `1px solid ${currentTheme.colors.inputBorder}`,
+                    border: `1px solid ${theme.colors.inputBorder}`,
                     backgroundColor: 'white',
                     fontSize: '14px'
                   }}
@@ -714,7 +715,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 marginBottom: '8px'
               }}>
                 Project Name
@@ -728,7 +729,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                   width: '100%',
                   padding: '10px',
                   borderRadius: '8px',
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   backgroundColor: 'white',
                   fontSize: '14px'
                 }}
@@ -740,7 +741,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                 display: 'block',
                 fontSize: '14px',
                 fontWeight: '500',
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
                 marginBottom: '8px'
               }}>
                 Description (Optional)
@@ -754,7 +755,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                   width: '100%',
                   padding: '10px',
                   borderRadius: '8px',
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   backgroundColor: 'white',
                   fontSize: '14px',
                   resize: 'vertical'
@@ -778,8 +779,8 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                 style={{
                   padding: '10px 20px',
                   backgroundColor: 'transparent',
-                  color: currentTheme.colors.textMedium,
-                  border: `1px solid ${currentTheme.colors.inputBorder}`,
+                  color: theme.colors.textMedium,
+                  border: `1px solid ${theme.colors.inputBorder}`,
                   borderRadius: '8px',
                   fontSize: '14px',
                   fontWeight: '500',
@@ -794,7 +795,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                 disabled={isCreating || !newProjectName.trim()}
                 style={{
                   padding: '10px 20px',
-                  backgroundColor: currentTheme.colors.buttonPrimary,
+                  backgroundColor: theme.colors.buttonPrimary,
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
@@ -843,7 +844,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               <h3 style={{
                 fontSize: '20px',
                 fontWeight: '600',
-                color: currentTheme.colors.textDark
+                color: theme.colors.textDark
               }}>
                 Files in {selectedProject.name}
               </h3>
@@ -858,7 +859,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                   border: 'none',
                   fontSize: '24px',
                   cursor: 'pointer',
-                  color: currentTheme.colors.textMedium
+                  color: theme.colors.textMedium
                 }}
               >
                 ×
@@ -869,7 +870,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               <div style={{
                 textAlign: 'center',
                 padding: '40px',
-                color: currentTheme.colors.textMedium
+                color: theme.colors.textMedium
               }}>
                 Loading files...
               </div>
@@ -877,11 +878,11 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               <div style={{
                 textAlign: 'center',
                 padding: '60px 20px',
-                backgroundColor: currentTheme.colors.backgroundAlt,
+                backgroundColor: theme.colors.backgroundAlt,
                 borderRadius: '8px'
               }}>
                 <div style={{ fontSize: '48px', marginBottom: '16px' }}>📄</div>
-                <div style={{ fontSize: '16px', color: currentTheme.colors.textMedium }}>
+                <div style={{ fontSize: '16px', color: theme.colors.textMedium }}>
                   No files uploaded yet
                 </div>
                 <button
@@ -892,7 +893,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                   style={{
                     marginTop: '16px',
                     padding: '8px 16px',
-                    backgroundColor: currentTheme.colors.primary,
+                    backgroundColor: theme.colors.primary,
                     color: 'white',
                     border: 'none',
                     borderRadius: '6px',
@@ -915,22 +916,22 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     padding: '16px',
-                    backgroundColor: currentTheme.colors.backgroundAlt,
+                    backgroundColor: theme.colors.backgroundAlt,
                     borderRadius: '8px',
-                    border: `1px solid ${currentTheme.colors.grayLight}`
+                    border: `1px solid ${theme.colors.grayLight}`
                   }}>
                     <div style={{ flex: 1 }}>
                       <div style={{
                         fontSize: '14px',
                         fontWeight: '500',
-                        color: currentTheme.colors.textDark,
+                        color: theme.colors.textDark,
                         marginBottom: '4px'
                       }}>
                         {file.file_name}
                       </div>
                       <div style={{
                         fontSize: '12px',
-                        color: currentTheme.colors.textLight
+                        color: theme.colors.textLight
                       }}>
                         {formatFileSize(file.size)} • {file.type} • Uploaded {file.upload_date} by {file.uploader_name}
                       </div>
@@ -995,7 +996,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
               <h2 style={{
                 fontSize: '20px',
                 fontWeight: '600',
-                color: currentTheme.colors.textDark,
+                color: theme.colors.textDark,
               }}>
                 Upload Files to {selectedProjectForUpload.name}
               </h2>
@@ -1009,7 +1010,7 @@ export default function ProjectsTab({ onError }: ProjectsTabProps) {
                   border: 'none',
                   fontSize: '24px',
                   cursor: 'pointer',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                 }}
               >
                 ×

@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { apiService } from '../../services/api';
 
 interface Project {
@@ -27,6 +27,7 @@ interface SelectSourcesModalProps {
 }
 
 export default function SelectSourcesModal({ onClose, onConfirm }: SelectSourcesModalProps) {
+  const { theme } = useTheme();
   const [userProjects, setUserProjects] = useState<Project[]>([]);
   const [selectedProjectId, setSelectedProjectId] = useState<string>('');
   const [selectedProjectFiles, setSelectedProjectFiles] = useState<ProjectFile[]>([]);

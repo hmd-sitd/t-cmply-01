@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useRef } from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import { apiService } from '../services/api';
 
 interface FileUploadWithProcessingProps {
@@ -27,6 +27,7 @@ export default function FileUploadWithProcessing({
   onUploadComplete,
   onError
 }: FileUploadWithProcessingProps) {
+  const { theme } = useTheme();
   const [uploadStatus, setUploadStatus] = useState<UploadStatus>({
     isUploading: false,
     progress: 0,
@@ -114,26 +115,26 @@ export default function FileUploadWithProcessing({
       {/* Main Upload Section */}
       <div style={{
         padding: '24px',
-        backgroundColor: currentTheme.colors.surface,
+        backgroundColor: theme.colors.surface,
         borderRadius: '12px',
-        border: `1px solid ${currentTheme.colors.inputBorder}`,
+        border: `1px solid ${theme.colors.inputBorder}`,
         marginBottom: '24px'
       }}>
         <h3 style={{
           fontSize: '18px',
           fontWeight: '600',
-          color: currentTheme.colors.textDark,
+          color: theme.colors.textDark,
           marginBottom: '16px'
         }}>
           Upload Documents
         </h3>
 
         <div style={{
-          border: `2px dashed ${currentTheme.colors.inputBorder}`,
+          border: `2px dashed ${theme.colors.inputBorder}`,
           borderRadius: '8px',
           padding: '32px',
           textAlign: 'center',
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          backgroundColor: theme.colors.backgroundAlt,
           marginBottom: '16px'
         }}>
           <input
@@ -153,21 +154,21 @@ export default function FileUploadWithProcessing({
             <div style={{
               fontSize: '48px',
               marginBottom: '16px',
-              color: currentTheme.colors.primary
+              color: theme.colors.primary
             }}>
               📁
             </div>
             <div style={{
               fontSize: '16px',
               fontWeight: '500',
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               marginBottom: '8px'
             }}>
               Click to select files or drag and drop
             </div>
             <div style={{
               fontSize: '14px',
-              color: currentTheme.colors.textMedium
+              color: theme.colors.textMedium
             }}>
               Supported formats: PDF, TXT, DOC, DOCX, MD
             </div>
@@ -179,13 +180,13 @@ export default function FileUploadWithProcessing({
           <div style={{
             marginBottom: '16px',
             padding: '12px',
-            backgroundColor: currentTheme.colors.backgroundAlt,
+            backgroundColor: theme.colors.backgroundAlt,
             borderRadius: '8px'
           }}>
             <div style={{
               fontSize: '14px',
               fontWeight: '500',
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               marginBottom: '8px'
             }}>
               Selected files ({selectedFiles.length}):
@@ -193,7 +194,7 @@ export default function FileUploadWithProcessing({
             {Array.from(selectedFiles).map((file, index) => (
               <div key={index} style={{
                 fontSize: '13px',
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 padding: '4px 0'
               }}>
                 • {file.name} ({(file.size / 1024 / 1024).toFixed(2)} MB)
@@ -210,8 +211,8 @@ export default function FileUploadWithProcessing({
             width: '100%',
             padding: '12px',
             backgroundColor: selectedFiles && !uploadStatus.isUploading 
-              ? currentTheme.colors.buttonPrimary 
-              : currentTheme.colors.inputBorder,
+              ? theme.colors.buttonPrimary 
+              : theme.colors.inputBorder,
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -257,7 +258,7 @@ export default function FileUploadWithProcessing({
                 height: '60px',
                 margin: '0 auto',
                 border: '4px solid #e5e7eb',
-                borderTop: `4px solid ${currentTheme.colors.primary}`,
+                borderTop: `4px solid ${theme.colors.primary}`,
                 borderRadius: '50%',
                 animation: 'spin 1s linear infinite'
               }} />
@@ -270,7 +271,7 @@ export default function FileUploadWithProcessing({
                 marginBottom: '16px',
                 fontSize: '16px',
                 fontWeight: '600',
-                color: currentTheme.colors.textDark
+                color: theme.colors.textDark
               }}>
                 {uploadStatus.currentFile}
               </div>
@@ -281,7 +282,7 @@ export default function FileUploadWithProcessing({
               textAlign: 'center',
               marginBottom: '20px',
               fontSize: '14px',
-              color: currentTheme.colors.textMedium
+              color: theme.colors.textMedium
             }}>
               {uploadStatus.statusMessage}
             </div>
@@ -297,7 +298,7 @@ export default function FileUploadWithProcessing({
               <div style={{
                 width: `${uploadStatus.progress}%`,
                 height: '100%',
-                backgroundColor: currentTheme.colors.primary,
+                backgroundColor: theme.colors.primary,
                 transition: 'width 0.3s ease',
                 borderRadius: '4px'
               }} />
@@ -309,7 +310,7 @@ export default function FileUploadWithProcessing({
               marginTop: '12px',
               fontSize: '18px',
               fontWeight: 'bold',
-              color: currentTheme.colors.primary
+              color: theme.colors.primary
             }}>
               {Math.round(uploadStatus.progress)}%
             </div>
@@ -318,12 +319,12 @@ export default function FileUploadWithProcessing({
             <div style={{
               marginTop: '24px',
               padding: '16px',
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: '8px'
             }}>
               <div style={{
                 fontSize: '12px',
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 marginBottom: '8px'
               }}>
                 Processing Pipeline:
@@ -333,7 +334,7 @@ export default function FileUploadWithProcessing({
                 gridTemplateColumns: '1fr 1fr',
                 gap: '8px',
                 fontSize: '11px',
-                color: currentTheme.colors.textLight
+                color: theme.colors.textLight
               }}>
                 <div>✓ File Upload</div>
                 <div>✓ Document Parsing</div>

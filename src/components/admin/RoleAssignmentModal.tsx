@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import type { User, Role } from '../../types';
 
 interface AdminUser extends User {
@@ -25,6 +25,7 @@ export default function RoleAssignmentModal({
   onAssignRole,
   onRemoveRole
 }: RoleAssignmentModalProps) {
+  const { theme } = useTheme();
   const [selectedRoles, setSelectedRoles] = useState<number[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -89,7 +90,7 @@ export default function RoleAssignmentModal({
     >
       <div
         style={{
-          backgroundColor: currentTheme.colors.surface,
+          backgroundColor: theme.colors.surface,
           borderRadius: "12px",
           padding: "32px",
           width: "100%",
@@ -112,14 +113,14 @@ export default function RoleAssignmentModal({
             <h2 style={{
               fontSize: "24px",
               fontWeight: "600",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               margin: "0 0 4px 0",
             }}>
               Manage User Roles
             </h2>
             <p style={{
               fontSize: "16px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               margin: 0,
             }}>
               {user.email}
@@ -132,7 +133,7 @@ export default function RoleAssignmentModal({
               border: "none",
               fontSize: "24px",
               cursor: "pointer",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               padding: "4px",
             }}
           >
@@ -143,14 +144,14 @@ export default function RoleAssignmentModal({
         {/* Current Roles Summary */}
         <div style={{
           padding: "16px",
-          backgroundColor: currentTheme.colors.backgroundAlt,
+          backgroundColor: theme.colors.backgroundAlt,
           borderRadius: "8px",
           marginBottom: "24px",
         }}>
           <div style={{
             fontSize: "14px",
             fontWeight: "500",
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
             marginBottom: "8px",
           }}>
             Current Roles ({selectedRoles.length})
@@ -168,8 +169,8 @@ export default function RoleAssignmentModal({
                     key={role.id}
                     style={{
                       padding: "4px 12px",
-                      backgroundColor: `${currentTheme.colors.primary}20`,
-                      color: currentTheme.colors.primary,
+                      backgroundColor: `${theme.colors.primary}20`,
+                      color: theme.colors.primary,
                       borderRadius: "16px",
                       fontSize: "12px",
                       fontWeight: "500",
@@ -185,7 +186,7 @@ export default function RoleAssignmentModal({
                       style={{
                         background: "none",
                         border: "none",
-                        color: currentTheme.colors.primary,
+                        color: theme.colors.primary,
                         cursor: isLoading ? "not-allowed" : "pointer",
                         fontSize: "14px",
                         padding: "0 2px",
@@ -199,7 +200,7 @@ export default function RoleAssignmentModal({
             ) : (
               <span style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
                 fontStyle: "italic",
               }}>
                 No roles assigned
@@ -218,12 +219,12 @@ export default function RoleAssignmentModal({
             style={{
               width: "100%",
               padding: "12px 40px 12px 16px",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               outline: "none",
-              backgroundColor: currentTheme.colors.inputBackground,
-              color: currentTheme.colors.textDark,
+              backgroundColor: theme.colors.inputBackground,
+              color: theme.colors.textDark,
             }}
           />
           <svg
@@ -234,7 +235,7 @@ export default function RoleAssignmentModal({
               transform: "translateY(-50%)",
               width: "16px",
               height: "16px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}
             fill="none"
             stroke="currentColor"
@@ -249,7 +250,7 @@ export default function RoleAssignmentModal({
         <div style={{
           flex: 1,
           overflowY: "auto",
-          border: `1px solid ${currentTheme.colors.grayLight}`,
+          border: `1px solid ${theme.colors.grayLight}`,
           borderRadius: "8px",
           marginBottom: "24px",
         }}>
@@ -257,7 +258,7 @@ export default function RoleAssignmentModal({
             <div style={{
               padding: "40px 20px",
               textAlign: "center",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
             }}>
               {searchTerm ? `No roles found matching "${searchTerm}"` : 'No roles available'}
             </div>
@@ -272,14 +273,14 @@ export default function RoleAssignmentModal({
                     alignItems: "center",
                     padding: "16px",
                     borderBottom: index < filteredRoles.length - 1 
-                      ? `1px solid ${currentTheme.colors.backgroundAlt}` 
+                      ? `1px solid ${theme.colors.backgroundAlt}` 
                       : "none",
                     cursor: "pointer",
                     transition: "background-color 0.2s",
                   }}
                   onClick={() => handleRoleToggle(role.id)}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
+                    e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.backgroundColor = "transparent";
@@ -293,7 +294,7 @@ export default function RoleAssignmentModal({
                     style={{
                       width: "18px",
                       height: "18px",
-                      accentColor: currentTheme.colors.primary,
+                      accentColor: theme.colors.primary,
                       marginRight: "12px",
                     }}
                   />
@@ -301,21 +302,21 @@ export default function RoleAssignmentModal({
                     <div style={{
                       fontSize: "16px",
                       fontWeight: "500",
-                      color: currentTheme.colors.textDark,
+                      color: theme.colors.textDark,
                       marginBottom: "4px",
                     }}>
                       {role.name}
                     </div>
                     <div style={{
                       fontSize: "14px",
-                      color: currentTheme.colors.textMedium,
+                      color: theme.colors.textMedium,
                       marginBottom: "4px",
                     }}>
                       {role.description}
                     </div>
                     <div style={{
                       fontSize: "12px",
-                      color: currentTheme.colors.textLight,
+                      color: theme.colors.textLight,
                       display: "flex",
                       gap: "16px",
                     }}>
@@ -343,11 +344,11 @@ export default function RoleAssignmentModal({
             style={{
               padding: "12px 24px",
               backgroundColor: "transparent",
-              border: `1px solid ${currentTheme.colors.inputBorder}`,
+              border: `1px solid ${theme.colors.inputBorder}`,
               borderRadius: "8px",
               fontSize: "14px",
               fontWeight: "500",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               cursor: "pointer",
               transition: "all 0.2s",
             }}

@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { currentTheme } from '../config/themes';
+import { useTheme } from '../contexts/ThemeContext';
 import type { Document } from '../types';
 import { formatFileSize, formatDate, getFileTypeFromName, getFileTypeColor } from '../utils/formatters';
 
@@ -20,14 +20,16 @@ export default function FileTable({
   onFileUpload,
   isAdmin
 }: FileTableProps) {
+  const { theme } = useTheme();
+  
   if (documents.length === 0) {
     return (
       <div
         style={{
-          backgroundColor: currentTheme.colors.surface,
+          backgroundColor: theme.colors.surface,
           borderRadius: "8px",
           overflow: "hidden",
-          border: `1px solid ${currentTheme.colors.grayLight}`,
+          border: `1px solid ${theme.colors.grayLight}`,
         }}
       >
         <div
@@ -44,7 +46,7 @@ export default function FileTable({
             style={{
               width: "80px",
               height: "80px",
-              backgroundColor: currentTheme.colors.backgroundAlt,
+              backgroundColor: theme.colors.backgroundAlt,
               borderRadius: "50%",
               display: "flex",
               alignItems: "center",
@@ -52,13 +54,13 @@ export default function FileTable({
               marginBottom: "24px",
             }}
           >
-            <div style={{ fontSize: "32px", color: currentTheme.colors.textMedium }}>📁</div>
+            <div style={{ fontSize: "32px", color: theme.colors.textMedium }}>📁</div>
           </div>
           <h3
             style={{
               fontSize: "18px",
               fontWeight: "600",
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
               marginBottom: "8px",
             }}
           >
@@ -67,7 +69,7 @@ export default function FileTable({
           <p
             style={{
               fontSize: "14px",
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               marginBottom: "24px",
             }}
           >
@@ -80,7 +82,7 @@ export default function FileTable({
             <label
               style={{
                 padding: "12px 24px",
-                backgroundColor: isBackendConnected ? currentTheme.colors.buttonPrimary : currentTheme.colors.textLight,
+                backgroundColor: isBackendConnected ? theme.colors.buttonPrimary : theme.colors.textLight,
                 color: "white",
                 border: "none",
                 borderRadius: "8px",
@@ -95,13 +97,13 @@ export default function FileTable({
               }}
               onMouseEnter={(e) => {
                 if (isBackendConnected) {
-                  e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+                  e.currentTarget.style.backgroundColor = theme.colors.buttonPrimaryHover;
                   e.currentTarget.style.transform = "translateY(-1px)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (isBackendConnected) {
-                  e.currentTarget.style.backgroundColor = currentTheme.colors.buttonPrimary;
+                  e.currentTarget.style.backgroundColor = theme.colors.buttonPrimary;
                   e.currentTarget.style.transform = "translateY(0)";
                 }
               }}
@@ -124,10 +126,10 @@ export default function FileTable({
   return (
     <div
       style={{
-        backgroundColor: currentTheme.colors.surface,
+        backgroundColor: theme.colors.surface,
         borderRadius: "8px",
         overflow: "hidden",
-        border: `1px solid ${currentTheme.colors.grayLight}`,
+        border: `1px solid ${theme.colors.grayLight}`,
       }}
     >
       <div
@@ -135,11 +137,11 @@ export default function FileTable({
           display: "grid",
           gridTemplateColumns: isAdmin ? "1fr 200px 100px 80px" : "1fr 200px 100px",
           padding: "16px 24px",
-          backgroundColor: currentTheme.colors.backgroundAlt,
-          borderBottom: `1px solid ${currentTheme.colors.grayLight}`,
+          backgroundColor: theme.colors.backgroundAlt,
+          borderBottom: `1px solid ${theme.colors.grayLight}`,
           fontSize: "14px",
           fontWeight: "500",
-          color: currentTheme.colors.textMedium,
+          color: theme.colors.textMedium,
         }}
       >
         <div>Name</div>
@@ -168,12 +170,12 @@ export default function FileTable({
               display: "grid",
               gridTemplateColumns: isAdmin ? "1fr 200px 100px 80px" : "1fr 200px 100px",
               padding: "16px 24px",
-              borderBottom: index < documents.length - 1 ? `1px solid ${currentTheme.colors.backgroundAlt}` : "none",
+              borderBottom: index < documents.length - 1 ? `1px solid ${theme.colors.backgroundAlt}` : "none",
               alignItems: "center",
               transition: "background-color 0.2s",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = currentTheme.colors.backgroundAlt;
+              e.currentTarget.style.backgroundColor = theme.colors.backgroundAlt;
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.backgroundColor = "transparent";
@@ -205,7 +207,7 @@ export default function FileTable({
               <span
                 style={{
                   fontSize: "14px",
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                 }}
               >
                 {filename}
@@ -214,7 +216,7 @@ export default function FileTable({
             <div
               style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}
             >
               {formatDate(lastModified)}
@@ -222,7 +224,7 @@ export default function FileTable({
             <div
               style={{
                 fontSize: "14px",
-                color: currentTheme.colors.textMedium,
+                color: theme.colors.textMedium,
               }}
             >
               {formatFileSize(size)}
@@ -236,12 +238,12 @@ export default function FileTable({
                     border: "none",
                     fontSize: "18px",
                     cursor: "pointer",
-                    color: currentTheme.colors.error,
+                    color: theme.colors.error,
                     padding: "4px",
                     borderRadius: "4px",
                     transition: "background-color 0.2s",
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${currentTheme.colors.error}20`)}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = `${theme.colors.error}20`)}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                   title="Delete document"
                 >
@@ -252,7 +254,7 @@ export default function FileTable({
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
-                    style={{ display: "block", color: currentTheme.colors.error }}
+                    style={{ display: "block", color: theme.colors.error }}
                   >
                     <path d="M3 6h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
                     <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>

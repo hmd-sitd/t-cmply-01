@@ -2,7 +2,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { currentTheme } from '../../config/themes';
+import { useTheme } from '../../contexts/ThemeContext';
 import { useAdminClients } from '../../hooks/useAdminClients';
 import { apiService } from '../../services/api';
 
@@ -17,6 +17,7 @@ interface NotificationState {
 }
 
 export default function ClientsTab({ onError }: ClientsTabProps) {
+  const { theme } = useTheme();
   const {
     clients,
     isLoading,
@@ -214,7 +215,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
           right: '20px',
           padding: '16px 20px',
           borderRadius: '8px',
-          backgroundColor: notification.type === 'success' ? currentTheme.colors.success : currentTheme.colors.error,
+          backgroundColor: notification.type === 'success' ? theme.colors.success : theme.colors.error,
           color: 'white',
           fontSize: '14px',
           fontWeight: '500',
@@ -260,14 +261,14 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
           <h2 style={{
             fontSize: '24px',
             fontWeight: '600',
-            color: currentTheme.colors.textDark,
+            color: theme.colors.textDark,
             marginBottom: '4px',
           }}>
             Organizations
           </h2>
           <p style={{
             fontSize: '14px',
-            color: currentTheme.colors.textMedium,
+            color: theme.colors.textMedium,
           }}>
             Manage organizations and assign unassigned users as organization admins.
           </p>
@@ -276,7 +277,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
           onClick={() => setShowCreateModal(true)}
           style={{
             padding: '10px 20px',
-            backgroundColor: currentTheme.colors.primary,
+            backgroundColor: theme.colors.primary,
             color: 'white',
             border: 'none',
             borderRadius: '8px',
@@ -314,7 +315,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
             flex: 1,
             minWidth: '200px',
             padding: '10px 16px',
-            border: `1px solid ${currentTheme.colors.border}`,
+            border: `1px solid ${theme.colors.grayLight}`,
             borderRadius: '8px',
             fontSize: '14px',
             outline: 'none',
@@ -328,7 +329,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
           }}
           style={{
             padding: '10px 16px',
-            border: `1px solid ${currentTheme.colors.border}`,
+            border: `1px solid ${theme.colors.grayLight}`,
             borderRadius: '8px',
             fontSize: '14px',
             outline: 'none',
@@ -351,22 +352,22 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
         <table style={{ width: '100%', borderCollapse: 'collapse' }}>
           <thead>
             <tr style={{
-              backgroundColor: currentTheme.colors.backgroundAlt,
-              borderBottom: `1px solid ${currentTheme.colors.border}`,
+              backgroundColor: theme.colors.backgroundAlt,
+              borderBottom: `1px solid ${theme.colors.grayLight}`,
             }}>
-              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: currentTheme.colors.textMedium }}>
+              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: theme.colors.textMedium }}>
                 Organization
               </th>
-              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: currentTheme.colors.textMedium }}>
+              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: theme.colors.textMedium }}>
                 Admin / Contact
               </th>
-              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: currentTheme.colors.textMedium }}>
+              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: theme.colors.textMedium }}>
                 Limits
               </th>
-              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: currentTheme.colors.textMedium }}>
+              <th style={{ padding: '12px 16px', textAlign: 'left', fontSize: '12px', fontWeight: '600', color: theme.colors.textMedium }}>
                 Status
               </th>
-              <th style={{ padding: '12px 16px', textAlign: 'right', fontSize: '12px', fontWeight: '600', color: currentTheme.colors.textMedium }}>
+              <th style={{ padding: '12px 16px', textAlign: 'right', fontSize: '12px', fontWeight: '600', color: theme.colors.textMedium }}>
                 Actions
               </th>
             </tr>
@@ -374,24 +375,24 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: currentTheme.colors.textMedium }}>
+                <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: theme.colors.textMedium }}>
                   Loading organizations...
                 </td>
               </tr>
             ) : clients.length === 0 ? (
               <tr>
-                <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: currentTheme.colors.textMedium }}>
+                <td colSpan={5} style={{ padding: '40px', textAlign: 'center', color: theme.colors.textMedium }}>
                   No organizations found
                 </td>
               </tr>
             ) : (
               clients.map((client) => (
-                <tr key={client.id} style={{ borderBottom: `1px solid ${currentTheme.colors.border}` }}>
+                <tr key={client.id} style={{ borderBottom: `1px solid ${theme.colors.grayLight}` }}>
                   <td style={{ padding: '16px' }}>
-                    <div style={{ fontWeight: '500', color: currentTheme.colors.textDark, marginBottom: '2px' }}>
+                    <div style={{ fontWeight: '500', color: theme.colors.textDark, marginBottom: '2px' }}>
                       {client.name}
                     </div>
-                    <div style={{ fontSize: '12px', color: currentTheme.colors.textMedium }}>
+                    <div style={{ fontSize: '12px', color: theme.colors.textMedium }}>
                       {client.slug}
                     </div>
                   </td>
@@ -399,21 +400,21 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     {client.admin_email || client.contact_email ? (
                       <div>
                         {client.admin_email && (
-                          <div style={{ fontSize: '14px', color: currentTheme.colors.textDark, fontWeight: '500' }}>
+                          <div style={{ fontSize: '14px', color: theme.colors.textDark, fontWeight: '500' }}>
                             Admin: {client.admin_email}
                           </div>
                         )}
                         {client.contact_email && client.contact_email !== client.admin_email && (
-                          <div style={{ fontSize: '12px', color: currentTheme.colors.textMedium }}>
+                          <div style={{ fontSize: '12px', color: theme.colors.textMedium }}>
                             Contact: {client.contact_email}
                           </div>
                         )}
                       </div>
                     ) : (
-                      <span style={{ fontSize: '14px', color: currentTheme.colors.textLight }}>No admin assigned</span>
+                      <span style={{ fontSize: '14px', color: theme.colors.textLight }}>No admin assigned</span>
                     )}
                   </td>
-                  <td style={{ padding: '16px', fontSize: '14px', color: currentTheme.colors.textMedium }}>
+                  <td style={{ padding: '16px', fontSize: '14px', color: theme.colors.textMedium }}>
                     {client.user_limit} users / {client.project_limit} projects / {client.storage_limit_gb}GB
                   </td>
                   <td style={{ padding: '16px' }}>
@@ -435,8 +436,8 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                         padding: '6px 12px',
                         marginRight: '8px',
                         backgroundColor: 'transparent',
-                        color: currentTheme.colors.primary,
-                        border: `1px solid ${currentTheme.colors.primary}`,
+                        color: theme.colors.primary,
+                        border: `1px solid ${theme.colors.primary}`,
                         borderRadius: '6px',
                         fontSize: '12px',
                         cursor: 'pointer',
@@ -449,8 +450,8 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                       style={{
                         padding: '6px 12px',
                         backgroundColor: 'transparent',
-                        color: currentTheme.colors.error,
-                        border: `1px solid ${currentTheme.colors.error}`,
+                        color: theme.colors.error,
+                        border: `1px solid ${theme.colors.error}`,
                         borderRadius: '6px',
                         fontSize: '12px',
                         cursor: 'pointer',
@@ -473,7 +474,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
         alignItems: 'center',
         marginTop: '20px',
         fontSize: '14px',
-        color: currentTheme.colors.textMedium,
+        color: theme.colors.textMedium,
       }}>
         <div>
           Showing {currentPage * pageSize + 1} to {Math.min((currentPage + 1) * pageSize, totalCount)} of {totalCount} organizations
@@ -485,7 +486,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
             style={{
               padding: '8px 16px',
               backgroundColor: 'white',
-              border: `1px solid ${currentTheme.colors.border}`,
+              border: `1px solid ${theme.colors.grayLight}`,
               borderRadius: '6px',
               cursor: currentPage === 0 ? 'not-allowed' : 'pointer',
               opacity: currentPage === 0 ? 0.5 : 1,
@@ -499,7 +500,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
             style={{
               padding: '8px 16px',
               backgroundColor: 'white',
-              border: `1px solid ${currentTheme.colors.border}`,
+              border: `1px solid ${theme.colors.grayLight}`,
               borderRadius: '6px',
               cursor: (currentPage + 1) * pageSize >= totalCount ? 'not-allowed' : 'pointer',
               opacity: (currentPage + 1) * pageSize >= totalCount ? 0.5 : 1,
@@ -518,14 +519,14 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: currentTheme.colors.modalOverlay,
+          backgroundColor: theme.colors.modalOverlay,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           zIndex: 2000,
         }}>
           <div style={{
-            backgroundColor: currentTheme.colors.modalBackground,
+            backgroundColor: theme.colors.modalBackground,
             borderRadius: '16px',
             padding: '40px',
             maxWidth: '650px',
@@ -538,13 +539,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
               fontSize: '24px',
               fontWeight: '700',
               marginBottom: '8px',
-              color: currentTheme.colors.textDark,
+              color: theme.colors.textDark,
             }}>
               {editingClient ? 'Edit Organization' : 'Create New Organization'}
             </h3>
             <p style={{
               fontSize: '14px',
-              color: currentTheme.colors.textMedium,
+              color: theme.colors.textMedium,
               marginBottom: '24px',
             }}>
               {editingClient ? 
@@ -560,7 +561,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   marginBottom: '8px',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                 }}>
                   Organization Name *
                 </label>
@@ -572,13 +573,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: `1px solid ${currentTheme.colors.inputBorder}`,
+                    border: `1px solid ${theme.colors.inputBorder}`,
                     borderRadius: '8px',
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    color: currentTheme.colors.textDark,
-                    backgroundColor: currentTheme.colors.inputBackground,
+                    color: theme.colors.textDark,
+                    backgroundColor: theme.colors.inputBackground,
                   }}
                 />
               </div>
@@ -589,7 +590,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   marginBottom: '8px',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                 }}>
                   Slug (URL-friendly identifier) *
                 </label>
@@ -601,13 +602,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: `1px solid ${currentTheme.colors.inputBorder}`,
+                    border: `1px solid ${theme.colors.inputBorder}`,
                     borderRadius: '8px',
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    color: currentTheme.colors.textDark,
-                    backgroundColor: currentTheme.colors.inputBackground,
+                    color: theme.colors.textDark,
+                    backgroundColor: theme.colors.inputBackground,
                   }}
                 />
               </div>
@@ -618,7 +619,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   marginBottom: '8px',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                 }}>
                   Description
                 </label>
@@ -630,14 +631,14 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: `1px solid ${currentTheme.colors.inputBorder}`,
+                    border: `1px solid ${theme.colors.inputBorder}`,
                     borderRadius: '8px',
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
                     resize: 'vertical',
-                    color: currentTheme.colors.textDark,
-                    backgroundColor: currentTheme.colors.inputBackground,
+                    color: theme.colors.textDark,
+                    backgroundColor: theme.colors.inputBackground,
                   }}
                 />
               </div>
@@ -650,7 +651,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     marginBottom: '8px',
                     fontSize: '14px',
                     fontWeight: '500',
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                   }}>
                     Assign Admin User (Optional)
                   </label>
@@ -661,13 +662,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     style={{
                       width: '100%',
                       padding: '10px 12px',
-                      border: `1px solid ${currentTheme.colors.inputBorder}`,
+                      border: `1px solid ${theme.colors.inputBorder}`,
                       borderRadius: '8px',
                       fontSize: '14px',
                       outline: 'none',
                       boxSizing: 'border-box',
-                      color: currentTheme.colors.textDark,
-                      backgroundColor: currentTheme.colors.inputBackground,
+                      color: theme.colors.textDark,
+                      backgroundColor: theme.colors.inputBackground,
                       cursor: loadingUnassigned ? 'wait' : 'pointer',
                     }}
                   >
@@ -681,7 +682,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   {loadingUnassigned && (
                     <p style={{
                       fontSize: '12px',
-                      color: currentTheme.colors.textMedium,
+                      color: theme.colors.textMedium,
                       marginTop: '4px',
                     }}>
                       Loading unassigned users...
@@ -689,7 +690,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   )}
                   <p style={{
                     fontSize: '12px',
-                    color: currentTheme.colors.textMedium,
+                    color: theme.colors.textMedium,
                     marginTop: '4px',
                   }}>
                     Only users without organization assignment are shown. Selected user will be assigned as admin.
@@ -703,7 +704,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   marginBottom: '8px',
                   fontSize: '14px',
                   fontWeight: '500',
-                  color: currentTheme.colors.textDark,
+                  color: theme.colors.textDark,
                 }}>
                   Contact Email
                 </label>
@@ -715,18 +716,18 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   style={{
                     width: '100%',
                     padding: '10px 12px',
-                    border: `1px solid ${currentTheme.colors.inputBorder}`,
+                    border: `1px solid ${theme.colors.inputBorder}`,
                     borderRadius: '8px',
                     fontSize: '14px',
                     outline: 'none',
                     boxSizing: 'border-box',
-                    color: currentTheme.colors.textDark,
-                    backgroundColor: currentTheme.colors.inputBackground,
+                    color: theme.colors.textDark,
+                    backgroundColor: theme.colors.inputBackground,
                   }}
                 />
                 <p style={{
                   fontSize: '12px',
-                  color: currentTheme.colors.textMedium,
+                  color: theme.colors.textMedium,
                   marginTop: '4px',
                 }}>
                   This will be used as the main contact email for the organization.
@@ -740,7 +741,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     marginBottom: '8px',
                     fontSize: '14px',
                     fontWeight: '500',
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                   }}>
                     User Limit
                   </label>
@@ -752,13 +753,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     style={{
                       width: '100%',
                       padding: '10px 12px',
-                      border: `1px solid ${currentTheme.colors.inputBorder}`,
+                      border: `1px solid ${theme.colors.inputBorder}`,
                       borderRadius: '8px',
                       fontSize: '14px',
                       outline: 'none',
                       boxSizing: 'border-box',
-                      color: currentTheme.colors.textDark,
-                      backgroundColor: currentTheme.colors.inputBackground,
+                      color: theme.colors.textDark,
+                      backgroundColor: theme.colors.inputBackground,
                     }}
                   />
                 </div>
@@ -769,7 +770,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     marginBottom: '8px',
                     fontSize: '14px',
                     fontWeight: '500',
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                   }}>
                     Project Limit
                   </label>
@@ -781,13 +782,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     style={{
                       width: '100%',
                       padding: '10px 12px',
-                      border: `1px solid ${currentTheme.colors.inputBorder}`,
+                      border: `1px solid ${theme.colors.inputBorder}`,
                       borderRadius: '8px',
                       fontSize: '14px',
                       outline: 'none',
                       boxSizing: 'border-box',
-                      color: currentTheme.colors.textDark,
-                      backgroundColor: currentTheme.colors.inputBackground,
+                      color: theme.colors.textDark,
+                      backgroundColor: theme.colors.inputBackground,
                     }}
                   />
                 </div>
@@ -798,7 +799,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     marginBottom: '8px',
                     fontSize: '14px',
                     fontWeight: '500',
-                    color: currentTheme.colors.textDark,
+                    color: theme.colors.textDark,
                   }}>
                     Storage (GB)
                   </label>
@@ -810,13 +811,13 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     style={{
                       width: '100%',
                       padding: '10px 12px',
-                      border: `1px solid ${currentTheme.colors.inputBorder}`,
+                      border: `1px solid ${theme.colors.inputBorder}`,
                       borderRadius: '8px',
                       fontSize: '14px',
                       outline: 'none',
                       boxSizing: 'border-box',
-                      color: currentTheme.colors.textDark,
-                      backgroundColor: currentTheme.colors.inputBackground,
+                      color: theme.colors.textDark,
+                      backgroundColor: theme.colors.inputBackground,
                     }}
                   />
                 </div>
@@ -833,8 +834,8 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                     flex: 1,
                     padding: '10px',
                     backgroundColor: 'white',
-                    color: currentTheme.colors.textDark,
-                    border: `1px solid ${currentTheme.colors.border}`,
+                    color: theme.colors.textDark,
+                    border: `1px solid ${theme.colors.grayLight}`,
                     borderRadius: '8px',
                     fontSize: '14px',
                     fontWeight: '500',
@@ -848,7 +849,7 @@ export default function ClientsTab({ onError }: ClientsTabProps) {
                   style={{
                     flex: 1,
                     padding: '10px',
-                    backgroundColor: currentTheme.colors.primary,
+                    backgroundColor: theme.colors.primary,
                     color: 'white',
                     border: 'none',
                     borderRadius: '8px',
